@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-@EnableCaching
+//@EnableCaching
 public class CacheConfig {
 
     @Bean

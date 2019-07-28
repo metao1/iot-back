@@ -1,49 +1,55 @@
 package com.gro.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 
-import java.util.Date;
+import java.util.Arrays;
+import java.util.List;
 
-@Getter
 public class ApiError {
 
-    @JsonProperty
     private HttpStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.NUMBER)
-    private Date timestamp;
-    @Length(min = 0, max = 255)
     private String message;
+    private List<String> errors;
 
-    private ApiError() {
-        timestamp = new Date();
-    }
-
-    public ApiError(HttpStatus status) {
-        this();
-        this.status = status;
-    }
-
-    public ApiError(HttpStatus status, String ex) {
-        this();
-        this.status = status;
-        this.message = ex;
-    }
-
-    public ApiError(HttpStatus status, String message, Throwable ex) {
-        this();
+    public ApiError(HttpStatus status, String message, List<String> errors) {
+        super();
         this.status = status;
         this.message = message;
+        this.errors = errors;
+    }
+
+    public ApiError(HttpStatus status, String message, String error) {
+        super();
+        this.status = status;
+        this.message = message;
+        this.errors = Arrays.asList(error);
+    }
+
+    public ApiError() {
     }
 
     public HttpStatus getStatus() {
         return status;
     }
 
+    public void setStatus(HttpStatus status) {
+        this.status = status;
+    }
+
     public String getMessage() {
         return message;
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public List<String> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
+    }
+
 }

@@ -1,8 +1,8 @@
 package com.gro.security.service;
 
+import com.gro.repository.UserRepository;
 import com.gro.security.JwtUserFactory;
 import com.gro.security.model.User;
-import com.gro.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,12 +20,9 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
-        } else {
-            return JwtUserFactory.create(user);
-        }
+        User user = userRepository.findOneByEmail(username).orElseThrow(() ->
+            new UsernameNotFoundException(String.format("No user found with username '%s'.", username))
+        );
+        return JwtUserFactory.create(user);
     }
 }

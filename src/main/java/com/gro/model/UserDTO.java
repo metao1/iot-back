@@ -1,6 +1,8 @@
 package com.gro.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.gro.security.model.Authority;
+import com.gro.security.model.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,157 +16,157 @@ import java.util.stream.Collectors;
  */
 public class UserDTO {
 
-  private Long id;
+    private Long id;
 
-  @Size(max = 50)
-  private String name;
+    @Size(max = 50)
+    private String name;
 
-  @Email
-  @NotBlank
-  @Size(min = 5, max = 254)
-  private String email;
+    @Email
+    @NotBlank
+    @Size(min = 5, max = 254)
+    private String email;
 
-  @Size(max = 256)
-  private String imageUrl;
+    @Size(max = 256)
+    private String imageUrl;
 
-  private boolean activated = false;
+    private boolean activated = false;
 
-  @Size(min = 2, max = 6)
-  private String langKey;
+    @Size(min = 2, max = 6)
+    private String langKey;
 
-  @JsonProperty("created_by")
-  private String createdBy;
+    @JsonProperty("created_by")
+    private String createdBy;
 
-  private Instant createdDate;
+    private Instant createdDate;
 
-  private String lastModifiedBy;
+    private String lastModifiedBy;
 
-  private Instant lastModifiedDate;
+    private Instant lastModifiedDate;
 
-  private Set<String> authorities;
+    private Set<String> authorities;
 
-  public UserDTO() {
-    // Empty constructor needed for Jackson.
-  }
+    public UserDTO() {
+        // Empty constructor needed for Jackson.
+    }
 
-  public UserDTO(User user) {
-    this.id = user.getId();
-    this.email = user.getEmail();
-    this.name = user.getName();
-    this.email = user.getEmail();
-    this.activated = user.getActivated();
-    this.createdBy = user.getCreatedBy();
-    this.imageUrl = user.getImageUrl();
-    this.langKey = user.getLangKey();
-    this.createdDate = user.getCreatedDate();
-    this.lastModifiedBy = user.getLastModifiedBy();
-    this.lastModifiedDate = user.getLastModifiedDate();
-    this.authorities = user.getAuthorities().stream()
-      .map(Authority::getName)
-      .collect(Collectors.toSet());
-  }
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.activated = user.getActivated();
+        this.createdBy = user.getCreatedBy();
+        this.imageUrl = user.getImageUrl();
+        this.langKey = user.getLangKey();
+        this.createdDate = user.getCreatedDate();
+        this.lastModifiedBy = user.getLastModifiedBy();
+        this.lastModifiedDate = user.getLastModifiedDate();
+        this.authorities = user.getAuthorities().stream()
+            .map(Authority::getName)
+            .collect(Collectors.toSet());
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public Long getId() {
+        return id;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public String getEmail() {
-    return email;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getImageUrl() {
-    return imageUrl;
-  }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-  public void setImageUrl(String imageUrl) {
-    this.imageUrl = imageUrl;
-  }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-  public boolean isActivated() {
-    return activated;
-  }
+    public boolean isActivated() {
+        return activated;
+    }
 
-  public void setActivated(boolean activated) {
-    this.activated = activated;
-  }
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
 
-  public String getLangKey() {
-    return langKey;
-  }
+    public String getLangKey() {
+        return langKey;
+    }
 
-  public void setLangKey(String langKey) {
-    this.langKey = langKey;
-  }
+    public void setLangKey(String langKey) {
+        this.langKey = langKey;
+    }
 
-  public Instant getCreatedDate() {
-    return createdDate;
-  }
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
 
-  public void setCreatedDate(Instant createdDate) {
-    this.createdDate = createdDate;
-  }
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
+    }
 
-  public String getCreatedBy() {
-    return createdBy;
-  }
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-  public String getLastModifiedBy() {
-    return lastModifiedBy;
-  }
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
+    }
 
-  public void setLastModifiedBy(String lastModifiedBy) {
-    this.lastModifiedBy = lastModifiedBy;
-  }
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
 
-  public Instant getLastModifiedDate() {
-    return lastModifiedDate;
-  }
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
 
-  public void setLastModifiedDate(Instant lastModifiedDate) {
-    this.lastModifiedDate = lastModifiedDate;
-  }
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
 
-  public Set<String> getAuthorities() {
-    return authorities;
-  }
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
 
-  public void setAuthorities(Set<String> authorities) {
-    this.authorities = authorities;
-  }
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
+    }
 
-  @Override
-  public String toString() {
-    return "UserDTO{" +
-      "email='" + email + '\'' +
-      ", name='" + name + '\'' +
-      ", email='" + email + '\'' +
-      ", imageUrl='" + imageUrl + '\'' +
-      ", activated=" + activated +
-      ", langKey='" + langKey + '\'' +
-      ", createdDate=" + createdDate +
-      ", lastModifiedBy='" + lastModifiedBy + '\'' +
-      ", lastModifiedDate=" + lastModifiedDate +
-      ", authorities=" + authorities +
-      "}";
-  }
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+            "email='" + email + '\'' +
+            ", name='" + name + '\'' +
+            ", email='" + email + '\'' +
+            ", imageUrl='" + imageUrl + '\'' +
+            ", activated=" + activated +
+            ", langKey='" + langKey + '\'' +
+            ", createdDate=" + createdDate +
+            ", lastModifiedBy='" + lastModifiedBy + '\'' +
+            ", lastModifiedDate=" + lastModifiedDate +
+            ", authorities=" + authorities +
+            "}";
+    }
 }

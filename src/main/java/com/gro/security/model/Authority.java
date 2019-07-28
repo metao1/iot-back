@@ -1,46 +1,56 @@
 package com.gro.security.model;
 
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "authority")
-public class Authority {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(length = 50)
+@org.hibernate.annotations.Cache(
+    usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE
+)
+public class Authority implements Serializable {
+    private static final long serialVersionUID = 1L;
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private AuthorityName name;
+    @Size(
+        max = 50
+    )
+    @Id
+    @Column(
+        name = "name",
+        length = 50
+    )
+    private String name;
 
-    @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-    private List<User> users;
-
-    public int getId() {
-        return id;
+    public Authority() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getName() {
+        return this.name;
     }
 
-    public AuthorityName getName() {
-        return name;
-    }
-
-    public void setName(AuthorityName name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else {
+            return o instanceof Authority && Objects.equals(this.name, ((Authority) o).name);
+        }
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public int hashCode() {
+        return Objects.hashCode(this.name);
+    }
+
+    public String toString() {
+        return "Authority{name='" + this.name + '\'' + "}";
     }
 }

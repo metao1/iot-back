@@ -57,7 +57,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     private ResponseEntity<ApiError> error(final Exception exception, final HttpStatus httpStatus, final String logRef) {
         final String message = Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
-        return new ResponseEntity<>(new ApiError(httpStatus, message), httpStatus);
+        return new ResponseEntity<>(new ApiError(httpStatus, message, message), httpStatus);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

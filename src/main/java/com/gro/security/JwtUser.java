@@ -25,8 +25,7 @@ public class JwtUser implements UserDetails {
     public JwtUser(
             int id,
             String username,
-            String firstname,
-            String lastname,
+            String name,
             String email,
             String password,
             Collection<? extends GrantedAuthority> authorities,
@@ -35,7 +34,7 @@ public class JwtUser implements UserDetails {
     ) {
         this.id = id;
         this.username = username;
-        this.firstname = firstname;
+        this.firstname = name;
         this.lastname = lastname;
         this.email = email;
         this.password = password;

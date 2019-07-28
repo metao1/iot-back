@@ -19,40 +19,44 @@ import org.springframework.web.context.request.WebRequest;
 public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler({
-            NotificationNotFoundException.class,
-            RPiComponentNotFoundException.class,
-            RPiPinNotFoundException.class,
-            EntityNotFoundException.class
+        NotificationNotFoundException.class,
+        RPiComponentNotFoundException.class,
+        RPiPinNotFoundException.class,
+        EntityNotFoundException.class
     })
     public ResponseEntity<Object> handleRPiComponentNotFound(NotFoundException e, WebRequest request) {
+        String error = e.getMessage();
         ApiError apiError =
-                new ApiError(HttpStatus.NOT_FOUND, e.getLocalizedMessage(), e);
+            new ApiError(HttpStatus.NOT_FOUND, e.getLocalizedMessage(), error);
 
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler(InvalidRPiComponentTypeException.class)
     public ResponseEntity<Object> handleInvalidRPiComponentType(InvalidRPiComponentTypeException e, WebRequest request) {
+        String error = e.getMessage();
         ApiError apiError =
-                new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, e.getLocalizedMessage(), e);
+            new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, e.getLocalizedMessage(), error);
 
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler(InvalidRelayStateException.class)
     public ResponseEntity<Object> handleInvalidRelayState(InvalidRelayStateException e, WebRequest request) {
+        String error = e.getMessage();
         ApiError apiError =
-                new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, e.getLocalizedMessage(), e);
+            new ApiError(HttpStatus.UNPROCESSABLE_ENTITY, e.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({
-            StorageException.class,
-            StorageFileNotFoundException.class
+        StorageException.class,
+        StorageFileNotFoundException.class
     })
     public ResponseEntity<Object> handleStorageException(StorageException e, WebRequest request) {
+        String error = e.getMessage();
         ApiError apiError =
-                new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), e);
+            new ApiError(HttpStatus.CONFLICT, e.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 

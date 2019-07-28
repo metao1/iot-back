@@ -2,12 +2,12 @@ package com.gro.web.service;
 
 import com.gro.exception.InvalidPasswordException;
 import com.gro.exception.LoginAlreadyUsedException;
-import com.gro.model.Authority;
-import com.gro.model.User;
 import com.gro.model.UserDTO;
 import com.gro.repository.AuthorityRepository;
 import com.gro.repository.UserRepository;
 import com.gro.security.AuthoritiesConstants;
+import com.gro.security.model.Authority;
+import com.gro.security.model.User;
 import com.gro.utils.Constants;
 import com.gro.utils.RandomUtil;
 import com.gro.utils.SecurityUtils;

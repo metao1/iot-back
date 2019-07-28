@@ -1,7 +1,7 @@
 package com.gro.security;
 
-import com.gro.model.User;
 import com.gro.repository.UserRepository;
+import com.gro.security.model.User;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
