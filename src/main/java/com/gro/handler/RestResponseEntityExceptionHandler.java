@@ -11,6 +11,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -62,6 +63,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiError> assertionException(final IllegalArgumentException exception) {
+        final String message = Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
+        return error(exception, HttpStatus.INTERNAL_SERVER_ERROR, message);
+    }
+
+    @ExceptionHandler(HttpServerErrorException.InternalServerError.class)
+    public ResponseEntity<ApiError> internalServerErrorException(final HttpServerErrorException.InternalServerError exception) {
         final String message = Optional.of(exception.getMessage()).orElse(exception.getClass().getSimpleName());
         return error(exception, HttpStatus.INTERNAL_SERVER_ERROR, message);
     }

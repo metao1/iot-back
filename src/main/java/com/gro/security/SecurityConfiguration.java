@@ -13,75 +13,66 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.filter.CorsFilter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  private final TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
-  private final CorsFilter corsFilter;
+    public SecurityConfiguration(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
+    }
 
-  public SecurityConfiguration(TokenProvider tokenProvider, CorsFilter corsFilter) {
-    this.tokenProvider = tokenProvider;
-    this.corsFilter = corsFilter;
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public CorsFilter corsFilter() throws Exception {
+        return new CorsFilter();
+    }
 
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web.ignoring()
-      .antMatchers(HttpMethod.OPTIONS, "/**")
-      .antMatchers("/app/**/*.{js,html}")
-      .antMatchers("/i18n/**")
-      .antMatchers("/content/**")
-      .antMatchers("/h2-console/**")
-      .antMatchers("/swagger-ui/index.html")
-      .antMatchers("/test/**");
-  }
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
+        http
+            .csrf()
+            .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new PersoInofAuthenticationEntryPoint())
+                .accessDeniedHandler(new PersoInfoAccessDeniedHandler())
+            .and()
+                .headers()
+            .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+                .authorizeRequests()
+                    .antMatchers("/api/authenticate").permitAll()
+                    .antMatchers("/api/event").permitAll()
+                    .antMatchers("/assets/*").permitAll()
+                    .antMatchers("/api/**").authenticated()
+            .anyRequest()
+            .authenticated();
+        // @formatter:on
+        http
+            .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(securityConfigurerAdapter(), UsernamePasswordAuthenticationFilter.class)
+            .headers()
+            .cacheControl();
+    }
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
-    // @formatter:off
-    http
-      .csrf()
-      .disable()
-      .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-      .exceptionHandling()
-      .authenticationEntryPoint(new PersoInofAuthenticationEntryPoint())
-      .accessDeniedHandler(new PersoInfoAccessDeniedHandler())
-      .and()
-      .headers()
-      .frameOptions()
-      .disable()
-      .and()
-      .sessionManagement()
-      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-      .and()
-      .authorizeRequests()
-      .antMatchers("/api/authenticate").permitAll()
-      .antMatchers("/api/register").permitAll()
-      .antMatchers("/api/activate").permitAll()
-      .antMatchers("/api/account/reset-password/init").permitAll()
-      .antMatchers("/api/account/reset-password/finish").permitAll()
-      .antMatchers("/assets/*").permitAll()
-      .antMatchers("/api/**").authenticated()
-      .antMatchers("/management/health").permitAll()
-      .antMatchers("/management/info").permitAll()
-      .antMatchers("/management/prometheus").permitAll()
-      .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-      .and()
-      .apply(securityConfigurerAdapter());
-    // @formatter:on
-  }
 
-  private JWTConfigurer securityConfigurerAdapter() {
-    return new JWTConfigurer(tokenProvider);
-  }
+    @Bean
+    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+        return new JwtAuthenticationTokenFilter();
+    }
+
+    private JWTFilter securityConfigurerAdapter() {
+        return new JWTFilter(tokenProvider);
+        //return new JWTConfigurer(tokenProvider);
+    }
 
 }
