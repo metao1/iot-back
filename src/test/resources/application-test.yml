@@ -1,0 +1,98 @@
+# SPRING PROPERTIES
+spring:
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false # we use gulp + BrowserSync for livereload
+    jackson:
+        serialization.indent_output: true
+    messages:
+        cache-duration: 1
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:mysql://localhost:3306/gro?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        username: root
+        password: Q}`D9z:<v-BMf;H"K3Pmr/qwG
+        hikari:
+            poolName: Hikari
+            auto-commit: false
+            data-source-properties:
+                cachePrepStmts: true
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: true
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL8Dialect
+        database: MYSQL
+        show-sql: true
+
+        properties:
+            hibernate.id.new_generator_mappings: true
+            hibernate.connection.provider_disables_autocommit: true
+            hibernate.cache.use_second_level_cache: true
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: false
+        hibernate:
+            ddl-auto: none
+
+logging:
+    level:
+        com.metao.persoinfo: DEBUG
+        org:
+            hibernate:
+                SQL: DEBUG
+                type:
+                    descriptor:
+                        sql:
+                            BasicBinder: TRACE
+
+# JWT : JSON WEB TOKEN PROPERTIES
+jwt:
+    header: Authorization
+    secret: password
+    expiration: 604800
+    route:
+        authentication:
+            path: auth
+            refresh: refresh
+
+quartz:
+    configLocation: quartz.properties
+exception:
+    notification-not-found: Notification not found
+    rpi-component-not-found: Component with supplied id was not found
+    invalid-rpi-component-type: Invalid Rpi component type
+    pin-not-found: Pin not found
+    invalid-relay-state: Invalid Relay state
+
+mqtt:
+    url: tcp://localhost:8161
+    username: admin
+    password: admin
+    topics:
+        relay:
+            change: change
+            poll: poll
+
+sse:
+    event:
+        humidity: humidity
+        temperature: temperature
+        proximity: proximidity
+        relay: relay
+        moisture: moisture
+        notification: notification
+
+twilio:
+    account:
+        sid: TWILIO SID
+        auth_token: TWILIO AUTH TOKEN
+    phone:
+        inbound: TWILIO INBOUND PHONE NUMBER
+        outbound: TWILIO OUTBOUND PHONE NUMBER
+
+
+
+server:
+    port: 8080
