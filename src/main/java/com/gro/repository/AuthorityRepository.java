@@ -1,6 +1,6 @@
 package com.gro.repository;
 
-import com.gro.security.model.Authority;
+import com.gro.model.Authority;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
