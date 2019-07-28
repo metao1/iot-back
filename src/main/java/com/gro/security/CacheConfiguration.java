@@ -19,7 +19,7 @@ import javax.cache.CacheManager;
 import java.time.Duration;
 
 @Configuration
-//@EnableCaching
+@EnableCaching
 public class CacheConfiguration {
 
     private final javax.cache.configuration.Configuration<Object, Object> jcacheConfiguration;
