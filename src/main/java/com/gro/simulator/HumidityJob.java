@@ -51,7 +51,7 @@ public class HumidityJob implements Job {
                         ThreadLocalRandom.current().nextDouble(0, 100)
                 ).setScale(2, RoundingMode.CEILING).doubleValue();
         long timestamp = new Date().getTime();
-        Message<String> message = MessageBuilder.createMessage("{\"humidity\":" + humidity + ", \"componentId\":10,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
+        Message<String> message = MessageBuilder.createMessage("{\"humidity\":" + humidity + ", \"componentId\":1,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
         try {
             Message<HumidityDTO> transform = humidityMessageTransformer.transform(message);
             humidityEmitterService.process(transform);
