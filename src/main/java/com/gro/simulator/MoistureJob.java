@@ -50,7 +50,7 @@ public class MoistureJob implements Job {
                 BigDecimal.valueOf(
                         ThreadLocalRandom.current().nextDouble(0, 100)
                 ).setScale(2, RoundingMode.CEILING).doubleValue();
-        Message<String> message = MessageBuilder.createMessage("{\"moisture\":" + moisture + ", \"componentId\":11,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
+        Message<String> message = MessageBuilder.createMessage("{\"moisture\":" + moisture + ", \"componentId\":2,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
         try {
             Message<MoistureDTO> transform = moistureMessageTransformer.transform(message);
             moistureEmitterService.process(transform);

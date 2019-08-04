@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class MoistureSensor extends AbstractRPiComponent {
     private static final long serialVersionUID = -8458254453273797900L;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private MoistureSensorPreferences preferences;
 
     public MoistureSensor() {
