@@ -40,14 +40,14 @@ public class TemperatureJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        LOGGER.info("temperature is ");
+        LOGGER.info("temperature is scheduled");
         Map<String, Object> headers = new HashMap<>();
         headers.put("temperature", new Object());
         long timestamp = new Date().getTime();
         double temperature = BigDecimal.valueOf(
-                ThreadLocalRandom.current().nextDouble(0, 100)
+                ThreadLocalRandom.current().nextDouble(25, 30)
         ).setScale(2, RoundingMode.CEILING).doubleValue();
-        Message<String> message = MessageBuilder.createMessage("{\"temperature\":" + temperature + ", \"componentId\":12,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
+        Message<String> message = MessageBuilder.createMessage("{\"temperature\":" + temperature + ", \"componentId\":3,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
         try {
             Message<TemperatureDTO> transform = humidityMessageTransformer.transform(message);
             humidityEmitterService.process(transform);

@@ -33,23 +33,23 @@ public class SchedulerService {
                 .build();
         CronTrigger trigger = newTrigger()
                 .withIdentity("trigger1", "group1")
-                .withSchedule(cronSchedule("0/10 * * * * ?"))
+                .withSchedule(cronSchedule("0/5 * * * * ?"))
                 .build();
 
         JobDetail job2 = newJob(TemperatureJob.class)
-                .withIdentity("job2", "group2")
+                .withIdentity("job2", "group1")
                 .build();
         CronTrigger trigger2 = newTrigger()
-                .withIdentity("trigger2", "group2")
-                .withSchedule(cronSchedule("0/12 * * * * ?"))
+                .withIdentity("trigger2", "group1")
+                .withSchedule(cronSchedule("0/6 * * * * ?"))
                 .build();
 
         JobDetail job3 = newJob(MoistureJob.class)
-                .withIdentity("job3", "group3")
+                .withIdentity("job3", "group1")
                 .build();
         CronTrigger trigger3 = newTrigger()
-                .withIdentity("trigger3", "group3")
-                .withSchedule(cronSchedule("0/13 * * * * ?"))
+                .withIdentity("trigger3", "group1")
+                .withSchedule(cronSchedule("0/4 * * * * ?"))
                 .build();
 
         scheduler.scheduleJob(job, trigger);

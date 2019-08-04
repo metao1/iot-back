@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class TemperatureSensor extends AbstractRPiComponent {
     private static final long serialVersionUID = -2861056769929307256L;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private TemperatureSensorPreferences preferences;
 
     public TemperatureSensor() {

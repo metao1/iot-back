@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Relay extends AbstractRPiComponent {
     private static final long serialVersionUID = 7384389994862545570L;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private RelayPreferences preferences;
 
     public Relay() {

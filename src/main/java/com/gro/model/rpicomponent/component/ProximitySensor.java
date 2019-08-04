@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class ProximitySensor extends AbstractRPiComponent {
     private static final long serialVersionUID = -4988765402801140717L;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private ProximitySensorPreferences preferences;
 
     public ProximitySensor() {

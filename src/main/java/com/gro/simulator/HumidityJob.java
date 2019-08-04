@@ -43,7 +43,7 @@ public class HumidityJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        LOGGER.info("humidity is ");
+        LOGGER.info("humidity is scheduled");
         Map<String, Object> headers = new HashMap<>();
         headers.put("humidity", new Object());
         double humidity =
