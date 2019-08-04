@@ -4,15 +4,13 @@ import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpicomponent.RPiComponentType;
 import com.gro.model.rpicomponent.preferences.TemperatureSensorPreferences;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class TemperatureSensor extends AbstractRPiComponent {
     private static final long serialVersionUID = -2861056769929307256L;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private TemperatureSensorPreferences preferences;
 
     public TemperatureSensor() {

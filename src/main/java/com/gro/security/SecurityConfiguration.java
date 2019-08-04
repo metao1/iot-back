@@ -2,11 +2,10 @@ package com.gro.security;
 
 import com.gro.handler.PersoInfoAccessDeniedHandler;
 import com.gro.handler.PersoInofAuthenticationEntryPoint;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +18,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final TokenProvider tokenProvider;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+
+    @Autowired
+    private JwtAccessDeniedHandler accessDeniedHandler;
 
     public SecurityConfiguration(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
@@ -40,39 +45,36 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
             .csrf()
             .disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(new PersoInofAuthenticationEntryPoint())
-                .accessDeniedHandler(new PersoInfoAccessDeniedHandler())
+            .exceptionHandling()
+            .authenticationEntryPoint(unauthorizedHandler)
+            .accessDeniedHandler(accessDeniedHandler)
+            .authenticationEntryPoint(new PersoInofAuthenticationEntryPoint())
+            .accessDeniedHandler(new PersoInfoAccessDeniedHandler())
             .and()
-                .headers()
+            .headers()
             .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-                .authorizeRequests()
-                    .antMatchers("/api/authenticate").permitAll()
-                    .antMatchers("/api/event").permitAll()
-                    .antMatchers("/assets/*").permitAll()
-                    .antMatchers("/api/**").authenticated()
-            .anyRequest()
-            .authenticated();
+            .authorizeRequests()
+            .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/event").permitAll()
+            .antMatchers("/assets/*").permitAll()
+            .antMatchers("/api/**").authenticated()
+            .and()
+            .apply(securityConfigurerAdapter());
         // @formatter:on
         http
             .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
-            .addFilterBefore(securityConfigurerAdapter(), UsernamePasswordAuthenticationFilter.class)
+            //.addFilterBefore(securityConfigurerAdapter(), UsernamePasswordAuthenticationFilter.class)
             .headers()
             .cacheControl();
     }
 
 
-    @Bean
-    public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationTokenFilter();
-    }
-
-    private JWTFilter securityConfigurerAdapter() {
-        return new JWTFilter(tokenProvider);
-        //return new JWTConfigurer(tokenProvider);
+    private JWTConfigurer securityConfigurerAdapter() {
+        //return new JWTFilter(tokenProvider);
+        return new JWTConfigurer(tokenProvider);
     }
 
 }

@@ -4,15 +4,13 @@ import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpicomponent.RPiComponentType;
 import com.gro.model.rpicomponent.preferences.RelayPreferences;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Relay extends AbstractRPiComponent {
     private static final long serialVersionUID = 7384389994862545570L;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private RelayPreferences preferences;
 
     public Relay() {

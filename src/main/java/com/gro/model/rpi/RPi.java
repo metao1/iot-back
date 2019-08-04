@@ -1,6 +1,5 @@
 package com.gro.model.rpi;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpipin.RPiPin;

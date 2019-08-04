@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 public class HumiditySensor extends AbstractRPiComponent {
     private static final long serialVersionUID = -1697372017855638391L;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private HumiditySensorPreferences preferences;
 
     public HumiditySensor() {

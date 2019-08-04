@@ -86,7 +86,7 @@ public abstract class AbstractRPiComponent implements Serializable {
         AbstractRPiComponent comp = (AbstractRPiComponent) obj;
 
         return Objects.equals(this.id, comp.id) &&
-                Objects.equals(this.alias, comp.alias);
+            Objects.equals(this.alias, comp.alias);
 
     }
 

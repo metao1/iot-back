@@ -15,7 +15,7 @@ public abstract class AbstractScheduleJob {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @NotNull
     private AbstractRPiComponent component;
 

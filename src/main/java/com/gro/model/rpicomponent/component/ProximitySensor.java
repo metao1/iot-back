@@ -4,15 +4,13 @@ import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpicomponent.RPiComponentType;
 import com.gro.model.rpicomponent.preferences.ProximitySensorPreferences;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class ProximitySensor extends AbstractRPiComponent {
     private static final long serialVersionUID = -4988765402801140717L;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ProximitySensorPreferences preferences;
 
     public ProximitySensor() {
