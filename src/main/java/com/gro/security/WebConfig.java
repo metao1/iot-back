@@ -121,18 +121,4 @@ public class WebConfig implements ServletContextInitializer, WebServerFactoryCus
         cachingHttpHeadersFilter.setAsyncSupported(true);
     }
 
-   /* @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = persoInfoProperties.getCors();
-        if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
-            log.debug("Registering CORS filter");
-            source.registerCorsConfiguration("/api/**", config);
-            source.registerCorsConfiguration("/management/**", config);
-            source.registerCorsConfiguration("/assets/**", config);
-            source.registerCorsConfiguration("/v2/api-docs", config);
-        }
-        return new CorsFilter(source);
-    }*/
-
 }

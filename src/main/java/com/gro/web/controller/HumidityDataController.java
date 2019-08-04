@@ -28,7 +28,7 @@ public class HumidityDataController {
     private String componentNotFoundException;
 
 
-    @RequestMapping(value = "/{id}/humidity", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}/humidity")
     public Page<HumidityData> getHumidityDataPage(
             @PathVariable("id") Integer id,
             @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
@@ -41,7 +41,7 @@ public class HumidityDataController {
 
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(value = "/{id}/humidity", method = RequestMethod.POST)
+    @PostMapping(value = "/{id}/humidity")
     public void postHumidityData(@RequestBody HumidityData data) {
         humidityDataRepository.save(data);
     }
