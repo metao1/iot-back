@@ -48,6 +48,7 @@ public class TemperatureJob implements Job {
                 ThreadLocalRandom.current().nextDouble(25, 30)
         ).setScale(2, RoundingMode.CEILING).doubleValue();
         Message<String> message = MessageBuilder.createMessage("{\"temperature\":" + temperature + ", \"componentId\":3,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
+        LOGGER.info("temperature is {}", temperature);
         try {
             Message<TemperatureDTO> transform = humidityMessageTransformer.transform(message);
             humidityEmitterService.process(transform);

@@ -26,21 +26,21 @@ RelayService {
     private String relayPollTopic;
 
     public void toggle(RelayDTO relay) throws Exception {
-        gateway.send(
+        /*gateway.send(
                 MessageBuilder
                         .withPayload(jackson2JsonObjectMapper.toJson(relay))
                         .setHeader(MqttHeaders.TOPIC, relayChangeTopic)
                         .build()
-        );
+        );*/
     }
 
     public void poll(RelayDTO relay) throws Exception {
-        gateway.send(
+       /* gateway.send(
                 MessageBuilder
                         .withPayload(jackson2JsonObjectMapper.toJson(relay))
                         .setHeader(MqttHeaders.TOPIC, relayPollTopic)
                         .build()
-        );
+        );*/
 
     }
 }

@@ -7,19 +7,17 @@ import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.support.json.Jackson2JsonObjectMapper;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 
-@MessageEndpoint
+//@MessageEndpoint
+@Component
 public class RelayMessageTransformer {
 
-    @Autowired
-    private Jackson2JsonObjectMapper jackson2JsonObjectMapper;
 
-    @Transformer(inputChannel = "relayTransformerChannel",
-            outputChannel = "relayEmitterChannel")
-    public Message<RelayDTO> transform(Message<String> message) throws Exception {
-        String payload = message.getPayload();
-        RelayDTO data = jackson2JsonObjectMapper.fromJson(payload, RelayDTO.class);
-        return MessageBuilder.createMessage(data, message.getHeaders());
+    /*@Transformer(inputChannel = "relayTransformerChannel",
+            outputChannel = "relayEmitterChannel")*/
+    public Message<RelayDTO> transform(RelayDTO messageActual, Message<String> message) throws Exception {
+        return MessageBuilder.createMessage(messageActual, message.getHeaders());
     }
 
 }

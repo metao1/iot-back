@@ -38,12 +38,11 @@ public class HumidityJob implements Job {
 
     @Autowired
     public HumidityJob() {
-
+        LOGGER.info("humidity is scheduled");
     }
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        LOGGER.info("humidity is scheduled");
         Map<String, Object> headers = new HashMap<>();
         headers.put("humidity", new Object());
         double humidity =
@@ -52,6 +51,7 @@ public class HumidityJob implements Job {
                 ).setScale(2, RoundingMode.CEILING).doubleValue();
         long timestamp = new Date().getTime();
         Message<String> message = MessageBuilder.createMessage("{\"humidity\":" + humidity + ", \"componentId\":1,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
+        LOGGER.info("humidity is {}", humidity);
         try {
             Message<HumidityDTO> transform = humidityMessageTransformer.transform(message);
             humidityEmitterService.process(transform);

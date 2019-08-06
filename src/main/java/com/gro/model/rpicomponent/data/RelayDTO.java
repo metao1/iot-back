@@ -31,4 +31,5 @@ public class RelayDTO {
         this.state = state;
     }
 
+
 }

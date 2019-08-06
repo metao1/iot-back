@@ -1,5 +1,8 @@
 package com.gro.simulator;
 
+import com.gro.model.relay.RelayScheduleJob;
+import com.gro.scheduling.RelayJob;
+import com.gro.scheduling.RelayJobFactory;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -21,6 +24,8 @@ public class SchedulerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerService.class);
 
+    @Autowired
+    RelayJobFactory relayJobFactory;
 
     public SchedulerService(@Autowired Scheduler scheduler) {
         this.scheduler = scheduler;
@@ -29,32 +34,41 @@ public class SchedulerService {
     public void createSchedule(String cronExpression) throws SchedulerException {
         LOGGER.info("creating the schedule");
         JobDetail job = newJob(HumidityJob.class)
-                .withIdentity("job1", "group1")
-                .build();
+            .withIdentity("job1", "group1")
+            .build();
         CronTrigger trigger = newTrigger()
-                .withIdentity("trigger1", "group1")
-                .withSchedule(cronSchedule("0/5 * * * * ?"))
-                .build();
+            .withIdentity("trigger1", "group1")
+            .withSchedule(cronSchedule("0/5 * * * * ?"))
+            .build();
 
         JobDetail job2 = newJob(TemperatureJob.class)
-                .withIdentity("job2", "group1")
-                .build();
+            .withIdentity("job2", "group1")
+            .build();
         CronTrigger trigger2 = newTrigger()
-                .withIdentity("trigger2", "group1")
-                .withSchedule(cronSchedule("0/6 * * * * ?"))
-                .build();
+            .withIdentity("trigger2", "group1")
+            .withSchedule(cronSchedule("0/6 * * * * ?"))
+            .build();
 
         JobDetail job3 = newJob(MoistureJob.class)
-                .withIdentity("job3", "group1")
-                .build();
+            .withIdentity("job3", "group1")
+            .build();
         CronTrigger trigger3 = newTrigger()
-                .withIdentity("trigger3", "group1")
-                .withSchedule(cronSchedule("0/4 * * * * ?"))
-                .build();
+            .withIdentity("trigger3", "group1")
+            .withSchedule(cronSchedule("0/4 * * * * ?"))
+            .build();
+
+        JobDetail relayJob = newJob(RelayJob.class)
+            .withIdentity("relayJob", "group1")
+            .build();
+        CronTrigger relayTrigger = newTrigger()
+            .withIdentity("relayTrigger", "group1")
+            .withSchedule(cronSchedule("0/6 * * * * ?"))
+            .build();
 
         scheduler.scheduleJob(job, trigger);
         scheduler.scheduleJob(job2, trigger2);
         scheduler.scheduleJob(job3, trigger3);
+        scheduler.scheduleJob(relayJobFactory.getJobDetail(new RelayScheduleJob()), relayTrigger);
     }
 
     @PreDestroy
