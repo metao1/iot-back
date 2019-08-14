@@ -51,7 +51,7 @@ public class TemperatureDataController {
     }
 
 
-    @RequestMapping(value = "/{id}/temperature/monthly/average", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}/temperature/monthly/average")
     public Page<TemperatureData> getTemperatureDataMonthlyAverage(
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
@@ -60,7 +60,7 @@ public class TemperatureDataController {
     }
 
 
-    @RequestMapping(value = "/{id}/temperature/daily/average", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}/temperature/daily/average")
     public Page<TemperatureData> getTemperatureDataDailyAverage(
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
@@ -108,6 +108,15 @@ public class TemperatureDataController {
         return temperatureDataRepository.findHourlyHighByComponent(component, pageable);
     }
 
+    @RequestMapping(value = "/{id}/temperature/monthly/low", method = RequestMethod.GET)
+    public Page<TemperatureData> getTemperatureDataMonthlyLow(
+        @PathVariable("id") Integer id,
+        @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
+
+        AbstractRPiComponent component = validateComponent(id);
+        return temperatureDataRepository.findMonthlyLowByComponent(component, pageable);
+
+    }
 
     @RequestMapping(value = "/{id}/temperature/hourly/low", method = RequestMethod.GET)
     public Page<TemperatureData> getTemperatureDataHourlyLow(

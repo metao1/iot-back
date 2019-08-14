@@ -38,7 +38,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findAllByComponent(component.get(), pageable);
     }
@@ -56,7 +56,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findMonthlyAverageByComponent(component.get(), pageable);
     }
@@ -68,7 +68,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findDailyAverageByComponent(component.get(), pageable);
     }
@@ -80,7 +80,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findDailyHighByComponent(component.get(), pageable);
     }
@@ -92,7 +92,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findDailyLowByComponent(component.get(), pageable);
     }
@@ -104,7 +104,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findHourlyAverageByComponent(component.get(), pageable);
     }
@@ -116,7 +116,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findHourlyHighByComponent(component.get(), pageable);
     }
@@ -128,7 +128,7 @@ public class MoistureDataController {
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
         Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
-        if (component.isPresent())
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         return moistureDataRepository.findHourlyLowByComponent(component.get(), pageable);
     }

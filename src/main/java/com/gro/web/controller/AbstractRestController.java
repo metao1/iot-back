@@ -38,7 +38,7 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Optional<T> getById(@PathVariable ID id) {
         Optional<T> t = this.repository.findById(id);
-        if (t.isPresent())
+        if (!t.isPresent())
             throw new EntityNotFoundException("Entity with id " + id + " was not found");
         return this.repository.findById(id);
     }

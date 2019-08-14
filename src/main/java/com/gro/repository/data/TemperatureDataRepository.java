@@ -13,7 +13,7 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
 
     Page<TemperatureData> findAllByComponent(AbstractRPiComponent component, Pageable pageable);
 
-    @Query(
+   /* @Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-00-00:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(AVG(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
             "WHERE td.component_id = ?#{#component.id} " +
@@ -26,11 +26,11 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY MONTH(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findMonthlyAverageByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
 
-    @Query(
+    /*@Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-%d-00:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(AVG(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
             "WHERE td.component_id = ?#{#component.id}" +
@@ -43,12 +43,12 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY DAY(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findDailyAverageByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
 
 
-    @Query(
+    /*@Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-%d-00:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(MAX(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
             "WHERE td.component_id = ?#{#component.id}" +
@@ -61,11 +61,11 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY DAY(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findDailyHighByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
 
-
+/*
     @Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-%d-00:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(MIN(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
@@ -79,12 +79,12 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY DAY(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findDailyLowByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
 
 
-    @Query(
+   /* @Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-%d-%H:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(AVG(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
             "WHERE td.component_id = ?#{#component.id} " +
@@ -97,12 +97,12 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY HOUR(td.timestamp), DAY(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findHourlyAverageByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
 
 
-    @Query(
+   /* @Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-%d-%H:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(MAX(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
             "WHERE td.component_id = ?#{#component.id} " +
@@ -115,17 +115,16 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY HOUR(td.timestamp), DAY(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findHourlyHighByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
 
-
-    @Query(
+   /* @Query(
         value = "SELECT td.id, CONVERT(DATE_FORMAT(td.timestamp,'%Y-%m-%d-%H:00:00'),DATETIME) as 'timestamp', td.component_id, ROUND(MIN(td.temperature), 2) as `temperature` " +
             "FROM temperature_data td " +
             "WHERE td.component_id = ?#{#component.id} " +
             "GROUP BY HOUR(td.timestamp), DAY(td.timestamp) ,td.id" +
-            "\n#pageable\n",
+            "#{#pageable}",
 
         countQuery = "SELECT COUNT(*) " +
             "FROM temperature_data td " +
@@ -133,9 +132,12 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
             "GROUP BY HOUR(td.timestamp), DAY(td.timestamp) ,td.id",
 
         nativeQuery = true
-    )
+    )*/
     Page<TemperatureData> findHourlyLowByComponent(
         @Param("component") AbstractRPiComponent component, Pageable pageable);
+
+    Page<TemperatureData> findMonthlyLowByComponent( @Param("component") AbstractRPiComponent component,
+                                                     Pageable pageable);
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     void deleteByTemperature(Integer id);
@@ -158,5 +160,4 @@ public interface TemperatureDataRepository extends JpaRepository<TemperatureData
     @Override
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     void deleteAllInBatch();
-
 }
