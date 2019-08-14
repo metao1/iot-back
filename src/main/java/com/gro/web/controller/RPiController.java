@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/rpi")
@@ -25,11 +26,11 @@ public class RPiController extends AbstractRestController<RPi, Integer> {
 
     @RequestMapping(value = "{id}/image", method = RequestMethod.POST)
     public Map<String, Object> saveImage(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
-        RPi rpi = this.repository.findById(id);
-        if (rpi != null) {
+        Optional<RPi> rpi = this.repository.findById(id);
+        if (rpi.isPresent()) {
             this.storageService.store(file);
-            rpi.setImageUrl(file.getOriginalFilename());
-            this.repository.save(rpi);
+            rpi.get().setImageUrl(file.getOriginalFilename());
+            this.repository.save(rpi.get());
         } else {
             throw new EntityNotFoundException("RPi with supplied id was not found");
         }

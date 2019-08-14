@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class AbstractRestController<T, ID extends Serializable> {
 
@@ -35,9 +36,9 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public T getById(@PathVariable ID id) {
-        T t = this.repository.findById(id);
-        if (t == null)
+    public Optional<T> getById(@PathVariable ID id) {
+        Optional<T> t = this.repository.findById(id);
+        if (t.isPresent())
             throw new EntityNotFoundException("Entity with id " + id + " was not found");
         return this.repository.findById(id);
     }
@@ -45,7 +46,7 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public T updateById(@PathVariable ID id, @RequestBody T obj) {
         logger.debug("update() object with id {} with request body {}", id, obj);
-        T entity = repository.findById(id);
+        Optional<T> entity = repository.findById(id);
 
         try {
             BeanUtils.copyProperties(obj, entity);
@@ -55,13 +56,13 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
 
         logger.debug("new merged entity {}", entity);
 
-        return repository.save(entity);
+        return repository.save(entity.get());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Map<String, Object> deleteById(@PathVariable ID id) {
-        T entity = this.repository.findById(id);
-        if (entity != null)
+        Optional<T> entity = this.repository.findById(id);
+        if (entity.isPresent())
             this.repository.deleteById(id);
         else
             throw new EntityNotFoundException("Entity with id " + id + " was not found");

@@ -2,14 +2,12 @@ package com.gro.scheduling;
 
 import com.gro.messaging.service.RelayEmitterService;
 import com.gro.messaging.transformer.RelayMessageTransformer;
+import com.gro.model.NotFoundException;
 import com.gro.model.relay.RelayScheduleJob;
-import com.gro.model.rpi.RPi;
 import com.gro.model.rpicomponent.AbstractRPiComponent;
-import com.gro.model.rpicomponent.component.Relay;
 import com.gro.model.rpicomponent.data.RelayDTO;
 import com.gro.model.rpicomponent.data.RelayState;
 import com.gro.repository.rpicomponent.RPiComponentRepository;
-import com.gro.repository.rpicomponent.RelayRepository;
 import com.gro.web.service.RelayService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -24,8 +22,8 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 public class RelayJob implements Job {
@@ -53,8 +51,8 @@ public class RelayJob implements Job {
         if (job != null) {
 
             RelayDTO relayDto = new RelayDTO(job.getComponent(), job.getState());
-            AbstractRPiComponent relay = relayRepository.findById(5);
-            relayDto.setComponent(relay);
+            Optional<AbstractRPiComponent> relay = relayRepository.findById(5);
+            relayDto.setComponent(relay.orElseThrow(() -> new NotFoundException("The component not found")));
             relayDto.setState(RelayState.ON);
             try {
                 relayService.toggle(relayDto);

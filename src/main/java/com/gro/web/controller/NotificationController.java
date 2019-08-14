@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/notification")
 public class NotificationController extends AbstractRestController<Notification, Integer> {
@@ -28,19 +30,19 @@ public class NotificationController extends AbstractRestController<Notification,
 
     @RequestMapping(value = "/state", method = RequestMethod.GET)
     public Page<Notification> getNotificationsByState(
-            @RequestParam(name = "read", required = true) Boolean read,
-            @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
+        @RequestParam(name = "read", required = true) Boolean read,
+        @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
         return this.notificationRepository.findAllByIsRead(read, pageable);
     }
 
     @RequestMapping(value = "/{id}/state", method = RequestMethod.PATCH)
     public Notification updateNotificationState(
-            @PathVariable("id") Integer id, @RequestParam(value = "read", required = true) Boolean read) {
+        @PathVariable("id") Integer id, @RequestParam(value = "read", required = true) Boolean read) {
 
-        Notification notification = notificationRepository.findById(id);
-        validateNotification(notification);
-        notification.setRead(read);
-        return this.notificationRepository.save(notification);
+        Optional<Notification> notification = notificationRepository.findById(id);
+        validateNotification(notification.get());
+        notification.get().setRead(read);
+        return this.notificationRepository.save(notification.get());
 
     }
 

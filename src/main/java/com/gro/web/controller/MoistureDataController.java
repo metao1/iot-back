@@ -16,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RequestMapping(value = "/api/component")
 @RestController
 public class MoistureDataController {
@@ -35,10 +37,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+       Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findAllByComponent(component, pageable);
+        return moistureDataRepository.findAllByComponent(component.get(), pageable);
     }
 
 
@@ -53,10 +55,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findMonthlyAverageByComponent(component, pageable);
+        return moistureDataRepository.findMonthlyAverageByComponent(component.get(), pageable);
     }
 
 
@@ -65,10 +67,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findDailyAverageByComponent(component, pageable);
+        return moistureDataRepository.findDailyAverageByComponent(component.get(), pageable);
     }
 
 
@@ -77,10 +79,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findDailyHighByComponent(component, pageable);
+        return moistureDataRepository.findDailyHighByComponent(component.get(), pageable);
     }
 
 
@@ -89,10 +91,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findDailyLowByComponent(component, pageable);
+        return moistureDataRepository.findDailyLowByComponent(component.get(), pageable);
     }
 
 
@@ -101,10 +103,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findHourlyAverageByComponent(component, pageable);
+        return moistureDataRepository.findHourlyAverageByComponent(component.get(), pageable);
     }
 
 
@@ -113,10 +115,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findHourlyHighByComponent(component, pageable);
+        return moistureDataRepository.findHourlyHighByComponent(component.get(), pageable);
     }
 
 
@@ -125,10 +127,10 @@ public class MoistureDataController {
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
 
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
-        return moistureDataRepository.findHourlyLowByComponent(component, pageable);
+        return moistureDataRepository.findHourlyLowByComponent(component.get(), pageable);
     }
 
 }

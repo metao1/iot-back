@@ -1,6 +1,7 @@
 package com.gro.simulator;
 
 import com.gro.messaging.service.TemperatureEmitterService;
+import com.gro.messaging.service.TemperaturePersistenceService;
 import com.gro.messaging.transformer.TemperatureMessageTransformer;
 import com.gro.model.rpicomponent.data.TemperatureDTO;
 import org.quartz.DisallowConcurrentExecution;
@@ -28,10 +29,13 @@ public class TemperatureJob implements Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(TemperatureJob.class);
 
     @Autowired
-    TemperatureEmitterService humidityEmitterService;
+    TemperatureEmitterService temperatureEmitterService;
 
     @Autowired
-    TemperatureMessageTransformer humidityMessageTransformer;
+    TemperatureMessageTransformer temperatureMessageTransformer;
+
+    @Autowired
+    TemperaturePersistenceService temperaturePersistenceService;
 
     @Autowired
     public TemperatureJob() {
@@ -50,8 +54,9 @@ public class TemperatureJob implements Job {
         Message<String> message = MessageBuilder.createMessage("{\"temperature\":" + temperature + ", \"componentId\":3,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
         LOGGER.info("temperature is {}", temperature);
         try {
-            Message<TemperatureDTO> transform = humidityMessageTransformer.transform(message);
-            humidityEmitterService.process(transform);
+            Message<TemperatureDTO> transform = temperatureMessageTransformer.transform(message);
+            temperatureEmitterService.process(transform);
+            temperaturePersistenceService.process(transform);
         } catch (Exception e) {
             e.printStackTrace();
         }

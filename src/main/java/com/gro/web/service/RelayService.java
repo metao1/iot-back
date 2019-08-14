@@ -16,8 +16,8 @@ RelayService {
     @Autowired
     private Jackson2JsonObjectMapper jackson2JsonObjectMapper;
 
-    @Autowired
-    private MqttOutboundGateway gateway;
+  /*  @Autowired
+    private MqttOutboundGateway gateway;*/
 
     @Value("${mqtt.topics.relay.change}")
     private String relayChangeTopic;
@@ -26,7 +26,7 @@ RelayService {
     private String relayPollTopic;
 
     public void toggle(RelayDTO relay) throws Exception {
-        /*gateway.send(
+       /* gateway.send(
                 MessageBuilder
                         .withPayload(jackson2JsonObjectMapper.toJson(relay))
                         .setHeader(MqttHeaders.TOPIC, relayChangeTopic)
@@ -35,7 +35,7 @@ RelayService {
     }
 
     public void poll(RelayDTO relay) throws Exception {
-       /* gateway.send(
+      /*  gateway.send(
                 MessageBuilder
                         .withPayload(jackson2JsonObjectMapper.toJson(relay))
                         .setHeader(MqttHeaders.TOPIC, relayPollTopic)

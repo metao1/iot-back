@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/rpipin")
@@ -33,11 +34,11 @@ public class RPiPinController {
     }
 
     private RPiPin validateRPiPin(Integer id) {
-        RPiPin pin = rPiPinRepository.findById(id);
-        if (pin == null)
+        Optional<RPiPin> pin = rPiPinRepository.findById(id);
+        if (!pin.isPresent())
             throw new RPiPinNotFoundException(pinNotFound);
         else
-            return pin;
+            return pin.get();
     }
 
 }

@@ -7,14 +7,19 @@ import com.gro.model.rpicomponent.exception.InvalidRelayStateException;
 import com.gro.model.rpicomponent.exception.RPiComponentNotFoundException;
 import com.gro.repository.rpicomponent.RelayRepository;
 import com.gro.web.service.RelayService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/component/relay")
 public class RelayController extends AbstractRestController<Relay, Integer> {
 
+    private final Logger logger = LoggerFactory.getLogger(RelayController.class);
     @Autowired
     private RelayService relayService;
 
@@ -32,30 +37,33 @@ public class RelayController extends AbstractRestController<Relay, Integer> {
         this.relayRepository = repository;
     }
 
-
     @RequestMapping(value = "/{id}/toggle", method = RequestMethod.PUT)
     public void toggleRelay(
-            @PathVariable Integer id,
-            @RequestParam(name = "state", required = true) String state) throws Exception {
-
-        Relay component = this.relayRepository.findById(id);
+        @PathVariable Integer id,
+        @RequestParam(name = "state", required = true) String state) throws Exception {
+        Optional<Relay> component = this.relayRepository.findById(id);
         RelayState relayState = this.validateRelayState(state);
-        RelayDTO relay = new RelayDTO(component, relayState);
-        relayService.toggle(relay);
+        if (component.isPresent()) {
+            RelayDTO relay = new RelayDTO(component.get(), relayState);
+            relayService.toggle(relay);
+        }
 
     }
 
     @RequestMapping(value = "/{id}/poll", method = RequestMethod.GET)
     public void pollRelay(@PathVariable("id") Integer id) throws Exception {
-        Relay component = validateRelay(id);
+        Optional<Relay> component = validateRelay(id);
         RelayState relayState = null;
-        RelayDTO relay = new RelayDTO(component, relayState);
-        relayService.poll(relay);
+        if (component.isPresent()) {
+            RelayDTO relay = new RelayDTO(component.get(), relayState);
+            relayService.poll(relay);
+        }
     }
 
-    private Relay validateRelay(Integer id) {
-        Relay component = this.relayRepository.findById(id);
-        if (component == null)
+    private Optional<Relay> validateRelay(Integer id) {
+        logger.info("{}", this.relayRepository.findById(id));
+        Optional<Relay> component = this.relayRepository.findById(id);
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFound);
         return component;
     }

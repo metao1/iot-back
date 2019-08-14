@@ -24,7 +24,7 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY MONTH(hd.timestamp)",
+                    "GROUP BY MONTH(hd.timestamp), td.id",
 
             nativeQuery = true
     )
@@ -36,13 +36,13 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             value = "SELECT hd.id, CONVERT(DATE_FORMAT(hd.timestamp,'%Y-%m-%d-00:00:00'),DATETIME) as 'timestamp', hd.component_id, ROUND(AVG(hd.moisture), 2) as `moisture` " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY DAY(hd.timestamp) " +
+                    "GROUP BY DAY(hd.timestamp) ,td.id" +
                     "\n#pageable\n",
 
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY DAY(hd.timestamp)",
+                    "GROUP BY DAY(hd.timestamp) ,td.id",
 
             nativeQuery = true
     )
@@ -54,13 +54,13 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             value = "SELECT hd.id, CONVERT(DATE_FORMAT(hd.timestamp,'%Y-%m-%d-00:00:00'),DATETIME) as 'timestamp', hd.component_id, ROUND(MAX(hd.moisture), 2) as `moisture` " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY DAY(hd.timestamp) " +
+                    "GROUP BY DAY(hd.timestamp) ,td.id" +
                     "\n#pageable\n",
 
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY DAY(hd.timestamp)",
+                    "GROUP BY DAY(hd.timestamp) ,td.id",
 
             nativeQuery = true
     )
@@ -72,13 +72,13 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             value = "SELECT hd.id, CONVERT(DATE_FORMAT(hd.timestamp,'%Y-%m-%d-00:00:00'),DATETIME) as 'timestamp', hd.component_id, ROUND(MIN(hd.moisture), 2) as `moisture` " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY DAY(hd.timestamp) " +
+                    "GROUP BY DAY(hd.timestamp) ,td.id" +
                     "\n#pageable\n",
 
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY DAY(hd.timestamp)",
+                    "GROUP BY DAY(hd.timestamp) ,td.id",
 
             nativeQuery = true
     )
@@ -96,7 +96,7 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp)",
+                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) ,td.id",
 
             nativeQuery = true
     )
@@ -108,13 +108,13 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             value = "SELECT hd.id, CONVERT(DATE_FORMAT(hd.timestamp,'%Y-%m-%d-%H:00:00'),DATETIME) as 'timestamp', hd.component_id, ROUND(MAX(hd.moisture), 2) as `moisture` " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) " +
+                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) ,td.id" +
                     "\n#pageable\n",
 
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp)",
+                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) ,td.id",
 
             nativeQuery = true
     )
@@ -126,13 +126,13 @@ public interface MoistureDataRepository extends JpaRepository<MoistureData, Inte
             value = "SELECT hd.id, CONVERT(DATE_FORMAT(hd.timestamp,'%Y-%m-%d-%H:00:00'),DATETIME) as 'timestamp', hd.component_id, ROUND(MIN(hd.moisture), 2) as `moisture` " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) " +
+                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) ,td.id" +
                     "\n#pageable\n",
 
             countQuery = "SELECT COUNT(*) " +
                     "FROM moisture_data hd " +
                     "WHERE hd.component_id = ?#{#component.id} " +
-                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp)",
+                    "GROUP BY HOUR(hd.timestamp), DAY(hd.timestamp) ,td.id",
 
             nativeQuery = true
     )

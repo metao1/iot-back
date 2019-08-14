@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -60,7 +61,7 @@ public class RPiComponentController {
         return component; //returns deleted component
     }
 
-    @RequestMapping(value = "/byType", method = RequestMethod.GET)
+    @GetMapping(value = "/byType")
     public List<AbstractRPiComponent> getComponentsByType(@RequestParam(value = "type", required = true) String type) {
         RPiComponentType componentType = validateComponentType(type);
         return rPiComponentRepository.findAllByType(componentType);
@@ -68,11 +69,11 @@ public class RPiComponentController {
 
 
     private AbstractRPiComponent validateComponent(Integer id) {
-        AbstractRPiComponent component = rPiComponentRepository.findById(id);
-        if (component == null)
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(id);
+        if (!component.isPresent())
             throw new RPiComponentNotFoundException(componentNotFoundException);
         else
-            return component;
+            return component.get();
     }
 
     private RPiComponentType validateComponentType(String type) {

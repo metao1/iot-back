@@ -10,6 +10,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class NotificationPersistenceService {
 
@@ -23,8 +25,8 @@ public class NotificationPersistenceService {
             outputChannel = "notificationNotifyChannel")
     public Message<Notification> process(Message<Notification> message) {
         Notification notification = message.getPayload();
-        AbstractRPiComponent component = rPiComponentRepository.findById(notification.getComponent().getId());
-        notification.setComponent(component);
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(notification.getComponent().getId());
+        notification.setComponent(component.get());
         Notification result = this.notificationRepository.save(notification);
         return MessageBuilder.createMessage(result, message.getHeaders());
     }

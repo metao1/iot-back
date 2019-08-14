@@ -25,4 +25,12 @@ public class Relay extends AbstractRPiComponent {
         this.preferences = preferences;
     }
 
+
+    @Override
+    public String toString() {
+        return "Relay{" +
+            "preferences=" + preferences +
+            ", type=" + type +
+            '}';
+    }
 }

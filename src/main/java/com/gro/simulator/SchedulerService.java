@@ -38,7 +38,7 @@ public class SchedulerService {
             .build();
         CronTrigger trigger = newTrigger()
             .withIdentity("trigger1", "group1")
-            .withSchedule(cronSchedule("0/5 * * * * ?"))
+            .withSchedule(cronSchedule("0/30 * * * * ?"))
             .build();
 
         JobDetail job2 = newJob(TemperatureJob.class)
@@ -46,7 +46,7 @@ public class SchedulerService {
             .build();
         CronTrigger trigger2 = newTrigger()
             .withIdentity("trigger2", "group1")
-            .withSchedule(cronSchedule("0/6 * * * * ?"))
+            .withSchedule(cronSchedule("0/60 * * * * ?"))
             .build();
 
         JobDetail job3 = newJob(MoistureJob.class)
@@ -54,7 +54,7 @@ public class SchedulerService {
             .build();
         CronTrigger trigger3 = newTrigger()
             .withIdentity("trigger3", "group1")
-            .withSchedule(cronSchedule("0/4 * * * * ?"))
+            .withSchedule(cronSchedule("0/40 * * * * ?"))
             .build();
 
         JobDetail relayJob = newJob(RelayJob.class)
@@ -62,7 +62,7 @@ public class SchedulerService {
             .build();
         CronTrigger relayTrigger = newTrigger()
             .withIdentity("relayTrigger", "group1")
-            .withSchedule(cronSchedule("0/6 * * * * ?"))
+            .withSchedule(cronSchedule("0/60 * * * * ?"))
             .build();
 
         scheduler.scheduleJob(job, trigger);

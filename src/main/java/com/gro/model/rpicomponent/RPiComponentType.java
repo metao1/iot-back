@@ -1,10 +1,10 @@
 package com.gro.model.rpicomponent;
 
 public enum RPiComponentType {
-    TEMPERATURE_HUMIDITY,
-    TEMPERATURE,
     HUMIDITY,
+    TEMPERATURE_HUMIDITY,
     MOISTURE,
+    TEMPERATURE,
     PROXIMITY,
     RELAY;
 

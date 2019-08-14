@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class NotificationEmitterService {
@@ -28,8 +29,8 @@ public class NotificationEmitterService {
     @ServiceActivator(inputChannel = "notificationNotifyChannel")
     public void process(Message<Notification> message) {
         Notification notification = message.getPayload();
-        AbstractRPiComponent component = rPiComponentRepository.findById(notification.getComponent().getId());
-        notification.setComponent(component);
+        Optional<AbstractRPiComponent> component = rPiComponentRepository.findById(notification.getComponent().getId());
+        notification.setComponent(component.get());
         Map<String, Object> obj = new HashMap<>();
         obj.put("event", eventName);
         obj.put("payload", notification);
