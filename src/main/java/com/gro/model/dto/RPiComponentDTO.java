@@ -4,8 +4,6 @@ import com.gro.model.rpicomponent.RPiComponentType;
 
 import java.io.Serializable;
 
-import static com.gro.model.rpicomponent.RPiComponentType.TEMPERATURE;
-
 public class RPiComponentDTO implements Serializable {
 
     private static final long serialVersionUID = -9072676419360409759L;
@@ -13,7 +11,7 @@ public class RPiComponentDTO implements Serializable {
     private int rpiId;
     private String alias;
     private int pinNumber;
-    protected RPiComponentType type = TEMPERATURE;
+    protected RPiComponentType type;
 
     public RPiComponentDTO() {
     }

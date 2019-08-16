@@ -6,6 +6,8 @@ import com.gro.model.rpi.RPi;
 import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpicomponent.RPiComponentType;
 import com.gro.model.rpicomponent.component.HumiditySensor;
+import com.gro.model.rpicomponent.component.MoistureSensor;
+import com.gro.model.rpicomponent.component.TemperatureSensor;
 import com.gro.model.rpicomponent.exception.InvalidRPiComponentTypeException;
 import com.gro.model.rpicomponent.exception.RPiComponentNotFoundException;
 import com.gro.repository.rpi.RPiRepository;
@@ -45,11 +47,20 @@ public class RPiComponentController {
     @PostMapping
     public AbstractRPiComponent postOneComponent(@RequestBody RPiComponentDTO component) {
         AbstractRPiComponent abstractRPiComponent = null;
+        Optional<RPi> rpi;
         switch (component.getType()) {
             case TEMPERATURE:
+                abstractRPiComponent = new WebUtils<>(TemperatureSensor.class).convertToObject(component);
+                break;
+            case MOISTURE:
+                abstractRPiComponent = new WebUtils<>(MoistureSensor.class).convertToObject(component);
+                break;
+            case HUMIDITY:
                 abstractRPiComponent = new WebUtils<>(HumiditySensor.class).convertToObject(component);
-                Optional<RPi> rpi = rPiRepository.findById(component.getRpiId());
-                abstractRPiComponent.setRpi(rpi.orElseThrow(() -> new NotFoundException("RPi " + component.getRpiId() + " not found")));
+        }
+        rpi = rPiRepository.findById(component.getRpiId());
+        if (abstractRPiComponent != null) {
+            abstractRPiComponent.setRpi(rpi.orElseThrow(() -> new NotFoundException("RPi " + component.getRpiId() + " not found")));
         }
         return rPiComponentRepository.save(abstractRPiComponent);
     }
