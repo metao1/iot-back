@@ -2,20 +2,18 @@ package com.gro.web.controller;
 
 import com.gro.model.rpicomponent.exception.EntityNotFoundException;
 import com.gro.repository.BaseRepository;
+import com.gro.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public abstract class AbstractRestController<T, ID extends Serializable> {
+public abstract class AbstractRestController<T, DTO, ID extends Serializable> {
 
     protected BaseRepository<T, ID> repository;
     private Logger logger = LoggerFactory.getLogger(AbstractRestController.class);
@@ -24,18 +22,18 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
         this.repository = repository;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Iterable<T> getAll() {
         return this.repository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public T create(@RequestBody T obj) {
+    @PostMapping
+    public T create(@RequestBody DTO obj) {
         logger.debug("create() with request body {} of type {}", obj, obj.getClass());
-        return this.repository.save(obj);
+        return this.repository.save(getWebUtils().convertToObject(obj));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public Optional<T> getById(@PathVariable ID id) {
         Optional<T> t = this.repository.findById(id);
         if (!t.isPresent())
@@ -43,7 +41,7 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
         return this.repository.findById(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     public T updateById(@PathVariable ID id, @RequestBody T obj) {
         logger.debug("update() object with id {} with request body {}", id, obj);
         Optional<T> entity = repository.findById(id);
@@ -59,7 +57,7 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
         return repository.save(entity.get());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{id}")
     public Map<String, Object> deleteById(@PathVariable ID id) {
         Optional<T> entity = this.repository.findById(id);
         if (entity.isPresent())
@@ -70,4 +68,6 @@ public abstract class AbstractRestController<T, ID extends Serializable> {
         result.put("success", true);
         return result;
     }
+
+    public abstract WebUtils<T> getWebUtils();
 }

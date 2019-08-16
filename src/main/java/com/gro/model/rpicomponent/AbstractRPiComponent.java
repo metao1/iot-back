@@ -1,6 +1,8 @@
 package com.gro.model.rpicomponent;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.gro.model.rpi.RPi;
 import com.gro.model.rpipin.RPiPin;
 import org.hibernate.annotations.GenericGenerator;
@@ -16,6 +18,9 @@ import java.util.Objects;
 public abstract class AbstractRPiComponent implements Serializable {
 
     private static final long serialVersionUID = -9072676419360409759L;
+    @JsonPropertyOrder("0")
+    @JsonProperty("type")
+    @Column(name = "type")
     protected RPiComponentType type;
 
     @Id

@@ -1,6 +1,5 @@
 package com.gro.model.rpi;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpipin.RPiPin;
@@ -25,20 +24,16 @@ public class RPi implements Serializable {
     private RPiType type = RPiType.RPI_3_MODEL_B;
 
     @NotNull
-    @JsonIgnore
     private String ip;
 
     @NotNull
-    @JsonIgnore
     private Integer port;
 
     @NotNull
-    @JsonIgnore
     private String mqttUsername;
 
     @NotNull
-    @JsonIgnore
-    private String mqttPassword = "some"; //todo test
+    private String mqttPassword;
 
     private String imageUrl;
 
@@ -105,7 +100,7 @@ public class RPi implements Serializable {
         return mqttPassword;
     }
 
-    public void setMqttPassword(String mqqtPassword) {
+    public void setMqttPassword(String mqttPassword) {
         this.mqttPassword = mqttPassword;
     }
 

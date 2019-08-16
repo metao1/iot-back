@@ -1,8 +1,10 @@
 package com.gro.simulator;
 
 import com.gro.messaging.service.MoistureEmitterService;
+import com.gro.messaging.service.MoisturePersistenceService;
 import com.gro.messaging.transformer.MoistureMessageTransformer;
 import com.gro.model.MoistureDTO;
+import com.gro.repository.rpicomponent.MoistureSensorRepository;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -37,6 +39,9 @@ public class MoistureJob implements Job {
     MoistureMessageTransformer moistureMessageTransformer;
 
     @Autowired
+    MoisturePersistenceService moisturePersistenceService;
+
+    @Autowired
     public MoistureJob() {
 
     }
@@ -47,15 +52,16 @@ public class MoistureJob implements Job {
         headers.put("moisture", new Object());
         long timestamp = new Date().getTime();
         double moisture =
-                BigDecimal.valueOf(
-                        ThreadLocalRandom.current().nextDouble(0, 100)
-                ).setScale(2, RoundingMode.CEILING).doubleValue();
+            BigDecimal.valueOf(
+                ThreadLocalRandom.current().nextDouble(0, 100)
+            ).setScale(2, RoundingMode.CEILING).doubleValue();
         Message<String> message = MessageBuilder.createMessage("{\"moisture\":" + moisture + ", \"componentId\":2,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
         LOGGER.info("moisture is {}", moisture);
 
         try {
             Message<MoistureDTO> transform = moistureMessageTransformer.transform(message);
             moistureEmitterService.process(transform);
+            moisturePersistenceService.process(transform);
         } catch (Exception e) {
             e.printStackTrace();
         }

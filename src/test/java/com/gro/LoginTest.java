@@ -2,7 +2,6 @@ package com.gro;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gro.model.LoginModel;
-import com.gro.security.model.User;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -36,9 +35,9 @@ public class LoginTest extends BaseTest {
     @Test
     public void testLoginIsOK() throws Exception {
         MockHttpServletResponse result = mvc.perform(post(createURLWithPort("/auth"))
-                .content(objectMapper.writeValueAsString(accountCredential)))
-                .andExpect(status().isOk())
-                .andReturn().getResponse();
+            .content(objectMapper.writeValueAsString(accountCredential)))
+            .andExpect(status().isOk())
+            .andReturn().getResponse();
 
         assertEquals(result.getStatus(), HttpServletResponse.SC_OK);
         final LoginModel user = objectMapper.readValue(result.getContentAsString(), LoginModel.class);

@@ -30,7 +30,6 @@ public class TemperatureDataController {
     @Value("${exception.rpi-component-not-found}")
     private String componentNotFoundException;
 
-
     @RequestMapping(value = "/{id}/temperature", method = RequestMethod.GET)
     public Page<TemperatureData> getTemperatureDataPage(
         @PathVariable("id") Integer id,
@@ -50,7 +49,6 @@ public class TemperatureDataController {
         temperatureDataRepository.save(data);
     }
 
-
     @GetMapping(value = "/{id}/temperature/monthly/average")
     public Page<TemperatureData> getTemperatureDataMonthlyAverage(
         @PathVariable("id") Integer id,
@@ -59,7 +57,6 @@ public class TemperatureDataController {
         return temperatureDataRepository.findMonthlyAverageByComponent(component, pageable);
     }
 
-
     @GetMapping(value = "/{id}/temperature/daily/average")
     public Page<TemperatureData> getTemperatureDataDailyAverage(
         @PathVariable("id") Integer id,
@@ -67,7 +64,6 @@ public class TemperatureDataController {
         AbstractRPiComponent component = validateComponent(id);
         return temperatureDataRepository.findDailyAverageByComponent(component, pageable);
     }
-
 
     @RequestMapping(value = "/{id}/temperature/daily/high", method = RequestMethod.GET)
     public Page<TemperatureData> getTemperatureDataDailyHigh(
@@ -78,7 +74,6 @@ public class TemperatureDataController {
         return temperatureDataRepository.findDailyHighByComponent(component, pageable);
     }
 
-
     @RequestMapping(value = "/{id}/temperature/daily/low", method = RequestMethod.GET)
     public Page<TemperatureData> getTemperatureDataDailyLow(
         @PathVariable("id") Integer id,
@@ -88,16 +83,13 @@ public class TemperatureDataController {
         return temperatureDataRepository.findDailyLowByComponent(component, pageable);
     }
 
-
     @RequestMapping(value = "/{id}/temperature/hourly/average", method = RequestMethod.GET)
     public Page<TemperatureData> getTemperatureDataHourlyAverage(
         @PathVariable("id") Integer id,
         @PageableDefault(sort = {"timestamp"}, direction = Sort.Direction.DESC, page = 0, size = 10) Pageable pageable) {
-
         AbstractRPiComponent component = validateComponent(id);
         return temperatureDataRepository.findHourlyAverageByComponent(component, pageable);
     }
-
 
     @RequestMapping(value = "/{id}/temperature/hourly/high", method = RequestMethod.GET)
     public Page<TemperatureData> getTemperatureDataHourlyHigh(

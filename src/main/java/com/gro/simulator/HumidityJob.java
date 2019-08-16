@@ -1,6 +1,7 @@
 package com.gro.simulator;
 
 import com.gro.messaging.service.HumidityEmitterService;
+import com.gro.messaging.service.HumidityPersistenceService;
 import com.gro.messaging.transformer.HumidityMessageTransformer;
 import com.gro.model.rpicomponent.data.HumidityDTO;
 import org.quartz.DisallowConcurrentExecution;
@@ -37,6 +38,9 @@ public class HumidityJob implements Job {
     HumidityMessageTransformer humidityMessageTransformer;
 
     @Autowired
+    HumidityPersistenceService humidityPersistenceService;
+
+    @Autowired
     public HumidityJob() {
         LOGGER.info("humidity is scheduled");
     }
@@ -55,6 +59,7 @@ public class HumidityJob implements Job {
         try {
             Message<HumidityDTO> transform = humidityMessageTransformer.transform(message);
             humidityEmitterService.process(transform);
+            humidityPersistenceService.process(transform);
         } catch (Exception e) {
             e.printStackTrace();
         }

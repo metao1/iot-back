@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface RPiComponentRepository extends RestrictedWriteRepository<AbstractRPiComponent, Integer> {
 
-    Optional<AbstractRPiComponent> findById(Integer id);
+    Optional<AbstractRPiComponent> findById(Long id);
 
     List<AbstractRPiComponent> findAllByType(RPiComponentType componentType);
 }

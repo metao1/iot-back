@@ -3,6 +3,7 @@ package com.gro.web.controller;
 import com.gro.model.notification.Notification;
 import com.gro.model.notification.NotificationNotFoundException;
 import com.gro.repository.NotificationRepository;
+import com.gro.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/notification")
-public class NotificationController extends AbstractRestController<Notification, Integer> {
+public class NotificationController extends AbstractRestController<Notification,Notification,  Integer> {
 
     @Value("${exception.notification-not-found}")
     private String notificationNotFound;
@@ -51,4 +52,8 @@ public class NotificationController extends AbstractRestController<Notification,
             throw new NotificationNotFoundException(notificationNotFound);
     }
 
+    @Override
+    public WebUtils<Notification> getWebUtils() {
+        return null;
+    }
 }

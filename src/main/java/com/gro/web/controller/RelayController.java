@@ -6,6 +6,7 @@ import com.gro.model.rpicomponent.data.RelayState;
 import com.gro.model.rpicomponent.exception.InvalidRelayStateException;
 import com.gro.model.rpicomponent.exception.RPiComponentNotFoundException;
 import com.gro.repository.rpicomponent.RelayRepository;
+import com.gro.utils.WebUtils;
 import com.gro.web.service.RelayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/component/relay")
-public class RelayController extends AbstractRestController<Relay, Integer> {
+public class RelayController extends AbstractRestController<Relay, RelayDTO, Integer> {
 
     private final Logger logger = LoggerFactory.getLogger(RelayController.class);
     @Autowired
@@ -75,4 +76,8 @@ public class RelayController extends AbstractRestController<Relay, Integer> {
         return relayState;
     }
 
+    @Override
+    public WebUtils<Relay> getWebUtils() {
+        return null;
+    }
 }
