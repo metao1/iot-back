@@ -3,6 +3,7 @@ package com.gro.model.rpipin;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.gro.model.rpi.RPi;
 import com.gro.model.rpicomponent.AbstractRPiComponent;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +15,14 @@ public class RPiPin implements Serializable {
     private static final long serialVersionUID = -2178663258584172348L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+        strategy= GenerationType.AUTO,
+        generator="native"
+    )
+    @GenericGenerator(
+        name = "native",
+        strategy = "native"
+    )
     private Integer id;
 
     @NotNull

@@ -10,8 +10,8 @@ public class RPiComponentDTO implements Serializable {
 
     private int rpiId;
     private String alias;
-    private int pinNumber;
-    protected RPiComponentType type;
+    private RPiComponentType type;
+    private RpiPinDto pin;
 
     public RPiComponentDTO() {
     }
@@ -28,14 +28,6 @@ public class RPiComponentDTO implements Serializable {
         this.alias = alias;
     }
 
-    public int getPinNumber() {
-        return pinNumber;
-    }
-
-    public void setPinNumber(int pinNumber) {
-        this.pinNumber = pinNumber;
-    }
-
     public RPiComponentType getType() {
         return type;
     }
@@ -50,5 +42,13 @@ public class RPiComponentDTO implements Serializable {
 
     public void setRpiId(int rpiId) {
         this.rpiId = rpiId;
+    }
+
+    public RpiPinDto getPin() {
+        return pin;
+    }
+
+    public void setPin(RpiPinDto pin) {
+        this.pin = pin;
     }
 }
