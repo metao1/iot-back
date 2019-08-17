@@ -1,9 +1,16 @@
 package com.gro.simulator;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.gro.handler.ObjectFactory;
 import com.gro.messaging.service.TemperatureEmitterService;
 import com.gro.messaging.service.TemperaturePersistenceService;
 import com.gro.messaging.transformer.TemperatureMessageTransformer;
+import com.gro.model.rpicomponent.component.TemperatureSensor;
 import com.gro.model.rpicomponent.data.TemperatureDTO;
+import com.gro.model.rpicomponent.data.TemperatureData;
+import com.gro.repository.rpicomponent.TemperatureSensorRepository;
+import com.gro.utils.WebUtils;
+import io.netty.util.internal.StringUtil;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -38,6 +45,12 @@ public class TemperatureJob implements Job {
     TemperaturePersistenceService temperaturePersistenceService;
 
     @Autowired
+    TemperatureSensorRepository temperatureSensorRepository;
+
+    @Autowired
+    ObjectFactory objectFactory;
+
+    @Autowired
     public TemperatureJob() {
 
     }
@@ -51,14 +64,28 @@ public class TemperatureJob implements Job {
         double temperature = BigDecimal.valueOf(
                 ThreadLocalRandom.current().nextDouble(25, 30)
         ).setScale(2, RoundingMode.CEILING).doubleValue();
-        Message<String> message = MessageBuilder.createMessage("{\"temperature\":" + temperature + ", \"componentId\":3,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
-        LOGGER.info("temperature is {}", temperature);
-        try {
-            Message<TemperatureDTO> transform = temperatureMessageTransformer.transform(message);
-            temperatureEmitterService.process(transform);
-            temperaturePersistenceService.process(transform);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Iterable<TemperatureSensor> temperatureSensors = temperatureSensorRepository.findAll();
+        if(temperatureSensors!=null && temperatureSensors.iterator().hasNext()){
+            TemperatureSensor temperatureSensor = temperatureSensors.iterator().next();
+            TemperatureDTO temperatureDTO = new TemperatureDTO();
+            temperatureDTO.setTemperature(temperature);
+            temperatureDTO.setComponentId(temperatureSensor.getId());
+            temperatureDTO.setTimestamp(new Date());
+            String temperaturePayload = objectFactory.toJson(new TypeReference<TemperatureDTO>() {
+            }, temperatureDTO);
+            if(StringUtil.isNullOrEmpty(temperaturePayload)){
+               return;
+            }
+            Message<String> message = MessageBuilder.createMessage(temperaturePayload, new MessageHeaders(headers));
+            LOGGER.info("temperature is {}", temperature);
+            try {
+                Message<TemperatureDTO> transform = temperatureMessageTransformer.transform(message);
+                temperatureEmitterService.process(transform);
+                temperaturePersistenceService.process(transform);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
 }

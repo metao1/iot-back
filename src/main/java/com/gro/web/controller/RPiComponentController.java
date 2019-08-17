@@ -8,7 +8,9 @@ import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpicomponent.RPiComponentType;
 import com.gro.model.rpicomponent.component.HumiditySensor;
 import com.gro.model.rpicomponent.component.MoistureSensor;
+import com.gro.model.rpicomponent.component.Relay;
 import com.gro.model.rpicomponent.component.TemperatureSensor;
+import com.gro.model.rpicomponent.data.RelayDTO;
 import com.gro.model.rpicomponent.exception.InvalidRPiComponentTypeException;
 import com.gro.model.rpicomponent.exception.RPiComponentNotFoundException;
 import com.gro.model.rpipin.RPiPin;
@@ -63,6 +65,9 @@ public class RPiComponentController {
                 break;
             case HUMIDITY:
                 abstractRPiComponent = new WebUtils<>(HumiditySensor.class).convertToObject(component);
+                break;
+            case RELAY:
+                abstractRPiComponent = new WebUtils<>(Relay.class).convertToObject(component);
         }
         rpi = rPiRepository.findById(component.getRpiId());
         if (abstractRPiComponent != null) {

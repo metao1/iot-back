@@ -46,7 +46,7 @@ public class SchedulerService {
             .build();
         CronTrigger trigger2 = newTrigger()
             .withIdentity("trigger2", "group1")
-            .withSchedule(cronSchedule("0/60 * * * * ?"))
+            .withSchedule(cronSchedule("0/40 * * * * ?"))
             .build();
 
         JobDetail job3 = newJob(MoistureJob.class)
