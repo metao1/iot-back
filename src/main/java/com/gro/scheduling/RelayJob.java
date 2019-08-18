@@ -2,13 +2,11 @@ package com.gro.scheduling;
 
 import com.gro.messaging.service.RelayEmitterService;
 import com.gro.messaging.transformer.RelayMessageTransformer;
-import com.gro.model.NotFoundException;
 import com.gro.model.relay.RelayScheduleJob;
 import com.gro.model.rpicomponent.AbstractRPiComponent;
 import com.gro.model.rpicomponent.component.Relay;
 import com.gro.model.rpicomponent.data.RelayDTO;
 import com.gro.model.rpicomponent.data.RelayState;
-import com.gro.repository.rpicomponent.RPiComponentRepository;
 import com.gro.repository.rpicomponent.RelayRepository;
 import com.gro.web.service.RelayService;
 import org.quartz.Job;
@@ -24,6 +22,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 @Component
@@ -58,24 +57,25 @@ public class RelayJob implements Job {
             if (!allRelays.iterator().hasNext()) {
                 return;
             }
-            AbstractRPiComponent relay = allRelays.iterator().next();
-            relayDto.setComponent(relay);
-            relayDto.setState(RelayState.ON);
-            try {
-                relayService.toggle(relayDto);
-                Map<String, Object> headers = new HashMap<>();
-                headers.put("relay", relayDto);
-                String toJson = jackson2JsonObjectMapper.toJson(relayDto);
-                Message<String> message = MessageBuilder.createMessage(toJson, new MessageHeaders(headers));
-                logger.info("relay is {}", message.getPayload());
+            for (AbstractRPiComponent relay : allRelays) {
+                relayDto.setComponent(relay);
+                relayDto.setState(RelayState.ON);
                 try {
-                    Message<RelayDTO> transform = relayMessageTransformer.transform(relayDto, message);
-                    humidityEmitterService.process(transform);
+                    relayService.toggle(relayDto);
+                    Map<String, Object> headers = new HashMap<>();
+                    headers.put("relay", relayDto);
+                    String toJson = jackson2JsonObjectMapper.toJson(relayDto);
+                    Message<String> message = MessageBuilder.createMessage(toJson, new MessageHeaders(headers));
+                    logger.info("relay is {}", message.getPayload());
+                    try {
+                        Message<RelayDTO> transform = relayMessageTransformer.transform(relayDto, message);
+                        humidityEmitterService.process(transform);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
-            } catch (Exception e) {
-                logger.error(e.getMessage());
             }
         }
     }

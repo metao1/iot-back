@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -60,21 +61,19 @@ public class TemperatureJob implements Job {
         LOGGER.info("temperature is scheduled");
         Map<String, Object> headers = new HashMap<>();
         headers.put("temperature", new Object());
-        long timestamp = new Date().getTime();
-        double temperature = BigDecimal.valueOf(
-                ThreadLocalRandom.current().nextDouble(25, 30)
-        ).setScale(2, RoundingMode.CEILING).doubleValue();
         Iterable<TemperatureSensor> temperatureSensors = temperatureSensorRepository.findAll();
-        if(temperatureSensors!=null && temperatureSensors.iterator().hasNext()){
-            TemperatureSensor temperatureSensor = temperatureSensors.iterator().next();
+        for (TemperatureSensor temperatureSensor : temperatureSensors) {
+            double temperature = BigDecimal.valueOf(
+                ThreadLocalRandom.current().nextDouble(25, 30)
+            ).setScale(2, RoundingMode.CEILING).doubleValue();
             TemperatureDTO temperatureDTO = new TemperatureDTO();
             temperatureDTO.setTemperature(temperature);
             temperatureDTO.setComponentId(temperatureSensor.getId());
             temperatureDTO.setTimestamp(new Date());
             String temperaturePayload = objectFactory.toJson(new TypeReference<TemperatureDTO>() {
             }, temperatureDTO);
-            if(StringUtil.isNullOrEmpty(temperaturePayload)){
-               return;
+            if (StringUtil.isNullOrEmpty(temperaturePayload)) {
+                return;
             }
             Message<String> message = MessageBuilder.createMessage(temperaturePayload, new MessageHeaders(headers));
             LOGGER.info("temperature is {}", temperature);
