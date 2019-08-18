@@ -1,9 +1,12 @@
 package com.gro.simulator;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.gro.handler.ObjectFactory;
 import com.gro.messaging.service.MoistureEmitterService;
 import com.gro.messaging.service.MoisturePersistenceService;
 import com.gro.messaging.transformer.MoistureMessageTransformer;
 import com.gro.model.MoistureDTO;
+import com.gro.model.rpicomponent.component.MoistureSensor;
 import com.gro.repository.rpicomponent.MoistureSensorRepository;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -42,6 +45,12 @@ public class MoistureJob implements Job {
     MoisturePersistenceService moisturePersistenceService;
 
     @Autowired
+    MoistureSensorRepository moistureSensorRepository;
+
+    @Autowired
+    ObjectFactory objectFactory;
+
+    @Autowired
     public MoistureJob() {
 
     }
@@ -50,20 +59,28 @@ public class MoistureJob implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         Map<String, Object> headers = new HashMap<>();
         headers.put("moisture", new Object());
-        long timestamp = new Date().getTime();
-        double moisture =
-            BigDecimal.valueOf(
-                ThreadLocalRandom.current().nextDouble(0, 100)
-            ).setScale(2, RoundingMode.CEILING).doubleValue();
-        Message<String> message = MessageBuilder.createMessage("{\"moisture\":" + moisture + ", \"componentId\":2,\"timestamp\":" + timestamp + "}", new MessageHeaders(headers));
-        LOGGER.info("moisture is {}", moisture);
+        Iterable<MoistureSensor> allMoistureSensors = moistureSensorRepository.findAll();
+        for (MoistureSensor moistureSensor : allMoistureSensors) {
+            double moisture =
+                BigDecimal.valueOf(
+                    ThreadLocalRandom.current().nextDouble(0, 100)
+                ).setScale(2, RoundingMode.CEILING).doubleValue();
+            MoistureDTO moistureDTO = new MoistureDTO();
+            moistureDTO.setMoisture(moisture);
+            moistureDTO.setComponentId(moistureSensor.getId());
+            moistureDTO.setTimestamp(new Date());
+            String moisturePayload = objectFactory.toJson(new TypeReference<MoistureDTO>() {
+            }, moistureDTO);
+            Message<String> message = MessageBuilder.createMessage(moisturePayload, new MessageHeaders(headers));
+            LOGGER.info("moisture is {}", moisture);
+            try {
+                Message<MoistureDTO> transform = moistureMessageTransformer.transform(message);
+                moistureEmitterService.process(transform);
+                moisturePersistenceService.process(transform);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        try {
-            Message<MoistureDTO> transform = moistureMessageTransformer.transform(message);
-            moistureEmitterService.process(transform);
-            moisturePersistenceService.process(transform);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
