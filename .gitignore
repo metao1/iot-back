@@ -30,7 +30,7 @@
 npm-debug.log
 testem.log
 /typings
-.gradle
+.gradle/*
 # e2e
 /e2e/*.js
 /e2e/*.map
@@ -38,4 +38,4 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
-/.build
+.build/*
