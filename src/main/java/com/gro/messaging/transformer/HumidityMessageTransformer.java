@@ -2,13 +2,14 @@ package com.gro.messaging.transformer;
 
 import com.gro.model.rpicomponent.data.HumidityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.integration.support.json.Jackson2JsonObjectMapper;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
-@Service
+@MessageEndpoint
 public class HumidityMessageTransformer {
 
     @Autowired

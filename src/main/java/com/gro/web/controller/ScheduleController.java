@@ -1,11 +1,14 @@
 package com.gro.web.controller;
 
+import com.gro.handler.ObjectFactory;
+import com.gro.model.dto.FixedTimeScheduleJobDto;
 import com.gro.repository.schedule.FixedTimeScheduleRepository;
 import com.gro.repository.schedule.IntervalScheduleRepository;
 import com.gro.repository.schedule.ScheduleRepository;
 import com.gro.scheduling.model.AbstractScheduleJob;
 import com.gro.scheduling.model.FixedTimeScheduleJob;
 import com.gro.scheduling.model.IntervalScheduleJob;
+import com.gro.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,6 +30,9 @@ public class ScheduleController {
     private FixedTimeScheduleRepository fixedTimeScheduleRepository;
 
     @Autowired
+    ObjectFactory objectFactory;
+
+    @Autowired
     private IntervalScheduleRepository intervalScheduleRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -36,14 +43,25 @@ public class ScheduleController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/fixed", method = RequestMethod.GET)
-    public List<FixedTimeScheduleJob> getAllFixedSchedules() {
-        return fixedTimeScheduleRepository.findAll();
+    public List<FixedTimeScheduleJobDto> getAllFixedSchedules() {
+        WebUtils<FixedTimeScheduleJobDto> fixedTimeScheduleJobWebUtils = new WebUtils<>(FixedTimeScheduleJobDto.class);
+        List<FixedTimeScheduleJob> all = fixedTimeScheduleRepository.findAll();
+        List<FixedTimeScheduleJobDto> dtos = new ArrayList<>();
+        for (FixedTimeScheduleJob fixedTimeScheduleJob : all) {
+            FixedTimeScheduleJobDto job = fixedTimeScheduleJobWebUtils.convertToObject(fixedTimeScheduleJob);
+            dtos.add(job);
+        }
+        return dtos;
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/fixed", method = RequestMethod.POST)
-    public FixedTimeScheduleJob postFixedTimeSchedule(@RequestBody FixedTimeScheduleJob schedule) {
-        return null;
+    public FixedTimeScheduleJobDto postFixedTimeSchedule(@RequestBody FixedTimeScheduleJobDto schedule) {
+        WebUtils<FixedTimeScheduleJob> fixedTimeScheduleJobWebUtils = new WebUtils<>(FixedTimeScheduleJob.class);
+        FixedTimeScheduleJob fixedTimeScheduleJob = fixedTimeScheduleJobWebUtils.convertToObject(schedule);
+        FixedTimeScheduleJob saved = fixedTimeScheduleRepository.save(fixedTimeScheduleJob);
+        WebUtils<FixedTimeScheduleJobDto> fixedTimeScheduleJobDtoWebUtils = new WebUtils<>(FixedTimeScheduleJobDto.class);
+        return fixedTimeScheduleJobDtoWebUtils.convertToObject(saved);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

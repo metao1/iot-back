@@ -67,13 +67,14 @@ exception:
   invalid-relay-state: Invalid Relay state
 
 mqtt:
-  url: tcp://localhost:8161
-  username: admin
-  password: admin
+  url: tcp://localhost:1883
+  username: mehrdad
+  password: nehrdad
   topics:
     relay:
       change: change
       poll: poll
+
 
 sse:
   event:

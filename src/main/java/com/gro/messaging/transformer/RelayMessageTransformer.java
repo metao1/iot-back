@@ -9,15 +9,17 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
-//@MessageEndpoint
-@Component
+@MessageEndpoint
 public class RelayMessageTransformer {
 
+    @Autowired
+    private Jackson2JsonObjectMapper jackson2JsonObjectMapper;
 
-    /*@Transformer(inputChannel = "relayTransformerChannel",
-            outputChannel = "relayEmitterChannel")*/
-    public Message<RelayDTO> transform(RelayDTO messageActual, Message<String> message) throws Exception {
-        return MessageBuilder.createMessage(messageActual, message.getHeaders());
+    @Transformer(inputChannel = "relayTransformerChannel",
+            outputChannel = "relayEmitterChannel")
+    public Message<RelayDTO> transform(Message<String> message) throws Exception {
+        RelayDTO relayDTO = jackson2JsonObjectMapper.fromJson(message.getPayload(),message.getHeaders());
+        return MessageBuilder.createMessage(relayDTO, message.getHeaders());
     }
 
 }

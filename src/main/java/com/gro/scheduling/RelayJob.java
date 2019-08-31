@@ -68,7 +68,7 @@ public class RelayJob implements Job {
                     Message<String> message = MessageBuilder.createMessage(toJson, new MessageHeaders(headers));
                     logger.info("relay is {}", message.getPayload());
                     try {
-                        Message<RelayDTO> transform = relayMessageTransformer.transform(relayDto, message);
+                        Message<RelayDTO> transform = relayMessageTransformer.transform(message);
                         humidityEmitterService.process(transform);
                     } catch (Exception e) {
                         e.printStackTrace();
