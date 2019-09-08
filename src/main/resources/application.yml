@@ -1,19 +1,29 @@
 # SPRING PROPERTIES
+#default user and password
+#  {
+#    "username": "admin@gmail.com",
+#    "password": "mehrdad"
+#  }
+
 spring:
+    servlet:
+      multipart:
+        max-file-size: 128KB
+        max-request-size: 128KB
     devtools:
         restart:
             enabled: true
         livereload:
-            enabled: false # we use gulp + BrowserSync for livereload
+            enabled: false
     jackson:
         serialization.indent_output: true
     messages:
         cache-duration: 1
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/gro?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&zeroDateTimeBehavior=CONVERT_TO_NULL
-        username: root
-        password: Q}`D9z:<v-BMf;H"K3Pmr/qwG
+        url: jdbc:mysql://localhost:3306/iot?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&zeroDateTimeBehavior=CONVERT_TO_NULL
+        username: mehrdad
+        password: mehrdad
         hikari:
             poolName: Hikari
             auto-commit: false
@@ -38,7 +48,7 @@ spring:
 
 logging:
     level:
-        com.metao.persoinfo: DEBUG
+        com.gro: DEBUG
         org:
             hibernate:
                 SQL: DEBUG
@@ -69,7 +79,7 @@ exception:
 mqtt:
   url: tcp://localhost:1883
   username: mehrdad
-  password: nehrdad
+  password: mehrdad
   topics:
     relay:
       change: change
@@ -124,4 +134,6 @@ micromonitor:
       enabled: false
       report-frequency: 60 # in seconds
 
-
+storage:
+  image:
+    location: /home/matio/upload-dir

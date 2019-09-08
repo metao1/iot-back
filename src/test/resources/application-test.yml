@@ -1,19 +1,25 @@
 # SPRING PROPERTIES
+#default user and password
+#  {
+#    "username": "admin@gmail.com",
+#    "password": "mehrdad"
+#  }
+
 spring:
     devtools:
         restart:
             enabled: true
         livereload:
-            enabled: false # we use gulp + BrowserSync for livereload
+            enabled: false
     jackson:
         serialization.indent_output: true
     messages:
         cache-duration: 1
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/gro?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-        username: root
-        password: Q}`D9z:<v-BMf;H"K3Pmr/qwG
+        url: jdbc:mysql://localhost:3306/iot?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&zeroDateTimeBehavior=CONVERT_TO_NULL
+        username: mehrdad
+        password: mehrdad
         hikari:
             poolName: Hikari
             auto-commit: false
@@ -26,9 +32,9 @@ spring:
         database-platform: org.hibernate.dialect.MySQL8Dialect
         database: MYSQL
         show-sql: true
-
         properties:
             hibernate.id.new_generator_mappings: true
+            hibernate.enable_lazy_load_no_trans: true
             hibernate.connection.provider_disables_autocommit: true
             hibernate.cache.use_second_level_cache: true
             hibernate.cache.use_query_cache: false
@@ -38,7 +44,7 @@ spring:
 
 logging:
     level:
-        com.metao.persoinfo: DEBUG
+        com.gro: DEBUG
         org:
             hibernate:
                 SQL: DEBUG
@@ -67,13 +73,14 @@ exception:
     invalid-relay-state: Invalid Relay state
 
 mqtt:
-    url: tcp://localhost:8161
-    username: admin
-    password: admin
+    url: tcp://localhost:1883
+    username: mehrdad
+    password: mehrdad
     topics:
         relay:
             change: change
             poll: poll
+
 
 sse:
     event:
@@ -92,7 +99,41 @@ twilio:
         inbound: TWILIO INBOUND PHONE NUMBER
         outbound: TWILIO OUTBOUND PHONE NUMBER
 
+micromonitor:
+    clientApp:
+        name: 'groapp'
+    cache: # Cache configuration
+        ehcache: # Ehcache configuration
+            time-to-live-seconds: 3600 # By default objects stay 1 hour in the cache
+            max-entries: 100 # Number of objects in each cache entry
+        # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
+    cors:
+        allowed-origins: '*'
+        allowed-methods: '*'
+        allowed-headers: '*'
+        exposed-headers: 'Authorization,Link,X-Total-Count'
+        allow-credentials: true
+        max-age: 1800
+    security:
+        authentication:
+            jwt:
+                # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+                base64-secret: bXktc2VjcmV0LWtleS13aGljaC1zaG91bGQtYmUtY2hhbmdlZC1pbi1wcm9kdWN0aW9uLWFuZC1iZS1iYXNlNjQtZW5jb2RlZAo=
+                # Token is valid 24 hours
+                token-validity-in-seconds: 86400
+                token-validity-in-seconds-for-remember-me: 2592000
+    mail: # specific JHipster mail property, for standard properties see MailProperties
+        from: persoinfo@localhost
+        base-url: http://127.0.0.1:8080
+    metrics:
+        logs: # Reports metrics in the logs
+            enabled: false
+            report-frequency: 60 # in seconds
 
+storage:
+    image:
+        location: /home/matio/upload-dir
 
-server:
-    port: 8080
+local:
+    server:
+      port: 8080
