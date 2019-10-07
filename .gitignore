@@ -34,7 +34,8 @@ testem.log
 # e2e
 /e2e/*.js
 /e2e/*.map
-
+/.mysql-data
+/data
 #System Files
 .DS_Store
 Thumbs.db
