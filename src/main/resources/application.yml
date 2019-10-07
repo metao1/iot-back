@@ -11,9 +11,9 @@ spring:
         cache-duration: 1
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/gro?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&zeroDateTimeBehavior=CONVERT_TO_NULL
-        username: root
-        password: Q}`D9z:<v-BMf;H"K3Pmr/qwG
+        url: jdbc:mysql://localhost:3306/iot?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&zeroDateTimeBehavior=CONVERT_TO_NULL
+        username: iot
+        password: iot
         hikari:
             poolName: Hikari
             auto-commit: false
@@ -34,11 +34,11 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: validate
 
 logging:
     level:
-        com.metao.persoinfo: DEBUG
+        com.gro: DEBUG
         org:
             hibernate:
                 SQL: DEBUG

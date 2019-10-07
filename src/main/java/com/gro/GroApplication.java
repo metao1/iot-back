@@ -2,7 +2,6 @@ package com.gro;
 
 import com.gro.security.MicromonitorProperties;
 import com.gro.simulator.SchedulerService;
-import com.metao.mqtt.MqttApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
