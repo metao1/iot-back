@@ -7,13 +7,14 @@ import com.iot.model.rpicomponent.data.HumidityData;
 import com.iot.repository.data.HumidityDataRepository;
 import com.iot.repository.rpicomponent.RPiComponentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+@MessageEndpoint
 public class HumidityPersistenceService {
 
     @Autowired

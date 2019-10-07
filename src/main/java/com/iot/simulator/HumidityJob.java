@@ -11,7 +11,6 @@ import com.iot.repository.rpicomponent.HumiditySensorRepository;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +29,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class HumidityJob implements Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(HumidityJob.class);
 
-    private Random random = new Random();
-
     @Autowired
     HumidityEmitterService humidityEmitterService;
 
@@ -48,12 +45,15 @@ public class HumidityJob implements Job {
     ObjectFactory objectFactory;
 
     @Autowired
+    private MqttPublisherClientService mqttPublisherClientService;
+
+    @Autowired
     public HumidityJob() {
         LOGGER.info("humidity is scheduled");
     }
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         Map<String, Object> headers = new HashMap<>();
         headers.put("humidity", new Object());
         Iterable<HumiditySensor> humiditySensors = humiditySensorRepository.findAll();
@@ -72,8 +72,9 @@ public class HumidityJob implements Job {
             LOGGER.info("humidity is {}", humidity);
             try {
                 Message<HumidityDTO> transform = humidityMessageTransformer.transform(message);
-                humidityEmitterService.process(transform);
-                humidityPersistenceService.process(transform);
+                //humidityEmitterService.process(transform);
+                //humidityPersistenceService.process(transform);
+                mqttPublisherClientService.addToMqttMessagePool(transform);
             } catch (Exception e) {
                 e.printStackTrace();
             }

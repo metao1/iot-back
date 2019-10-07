@@ -42,7 +42,7 @@ public class WebConfig implements ServletContextInitializer, WebServerFactoryCus
             log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
         }
         EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.ASYNC);
-        initCachingHttpHeadersFilter(servletContext, disps);
+        //initCachingHttpHeadersFilter(servletContext, disps);
         log.info("Web application fully configured");
     }
 

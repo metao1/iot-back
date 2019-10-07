@@ -49,7 +49,7 @@ public class UserJWTController {
             httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
             return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
         } catch (AuthenticationException ex) {
-            return new ResponseEntity(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity(ex.toString(), HttpStatus.UNAUTHORIZED);
         }
     }
 

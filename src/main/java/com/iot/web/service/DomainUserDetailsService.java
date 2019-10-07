@@ -1,8 +1,8 @@
-package com.iot.security;
+package com.iot.web.service;
 
 import com.iot.model.User;
 import com.iot.repository.UserRepository;
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,17 +36,16 @@ public class DomainUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
         if (new EmailValidator().isValid(login, null)) {
-            return userRepository.findOneWithAuthoritiesByEmail(login)
+            return userRepository.findOneByEmail(login)
                     .map(user -> {
                         org.springframework.security.core.userdetails.User securityUser =
                                 createSpringSecurityUser(login, user);
                         log.debug("Authenticated {}", login);
                         return securityUser;
-                    })
-                    .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
+                    }).orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
         }
         String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-        return userRepository.findOneWithAuthoritiesByEmail(lowercaseLogin)
+        return userRepository.findOneWithAuthoritiesByName(lowercaseLogin)
                 .map(user -> createSpringSecurityUser(lowercaseLogin, user))
                 .orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the database"));
     }

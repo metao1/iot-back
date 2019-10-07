@@ -4,6 +4,7 @@ import com.iot.model.MoistureDTO;
 import com.iot.web.service.ObjectSseEmitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@MessageEndpoint
 public class MoistureEmitterService {
 
     @Value("${sse.event.moisture}")

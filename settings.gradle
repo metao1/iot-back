@@ -1,1 +1,3 @@
 rootProject.name = 'iot'
+include ':mqtt-library'
+project(':mqtt-library').projectDir = new File(settingsDir, '../mqtt-lib')

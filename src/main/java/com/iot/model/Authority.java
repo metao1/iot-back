@@ -17,7 +17,6 @@ import java.util.Objects;
  */
 @Entity(name = "Authority")
 @Table(name = "authority")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authority implements Serializable {
 
   private static final long serialVersionUID = 1L;

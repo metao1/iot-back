@@ -1,6 +1,7 @@
 package com.iot;
 
 import com.iot.security.MicromonitorProperties;
+import com.iot.simulator.MqttPublisherClientService;
 import com.iot.simulator.SchedulerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,11 +18,14 @@ public class IoTApplication implements CommandLineRunner {
     }
 
     @Autowired
-    public SchedulerService schedulerService;
+    private SchedulerService schedulerService;
+
+    @Autowired
+    private MqttPublisherClientService mqttPublisherClientService;
 
     @Override
     public void run(String... strings) throws Exception {
         schedulerService.createSchedule("*/1 * * * * ?");
-
+        mqttPublisherClientService.run();
     }
 }

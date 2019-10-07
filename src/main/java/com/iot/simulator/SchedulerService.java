@@ -65,10 +65,10 @@ public class SchedulerService {
             .withSchedule(cronSchedule("0/60 * * * * ?"))
             .build();
 
-        //scheduler.scheduleJob(job, trigger);
+        scheduler.scheduleJob(job, trigger);
         //scheduler.scheduleJob(job2, trigger2);
         //scheduler.scheduleJob(job3, trigger3);
-        scheduler.scheduleJob(relayJobFactory.getJobDetail(new RelayScheduleJob()), relayTrigger);
+        //scheduler.scheduleJob(relayJobFactory.getJobDetail(new RelayScheduleJob()), relayTrigger);
     }
 
     @PreDestroy
