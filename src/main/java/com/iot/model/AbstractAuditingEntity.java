@@ -1,4 +1,4 @@
-package com.gro.model;
+package com.iot.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.envers.Audited;
