@@ -1,9 +1,14 @@
-version: '2'
+version: "3"
+
+networks:
+  metao-net:
+    driver: bridge
+
 services:
   mysql:
     image: mysql:latest
     volumes:
-      - "./.mysql-data/db:/var/lib/mysql"
+      - "./src/main/resources/data.sql"
     restart: always
     ports:
       - 3306:3306
@@ -12,6 +17,7 @@ services:
       MYSQL_DATABASE: iot
       MYSQL_USER: iot
       MYSQL_PASSWORD: iot
+
   redis:
     image: "redis:alpine"
     hostname: redis
@@ -27,4 +33,19 @@ services:
       - ./data/db:/data/db
     ports:
       - 27017:27017
-    command: –smallfiles
+
+  mqtt:
+    image: metao/mqtt:latest
+    container_name: "mqtt"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/mqtt
+      - MQTT_REDIS_HOST=redis
+      - MQTT_REDIS_PORT=6379
+      - MQTT_REDIS_DATABASE=redis
+    networks:
+      - metao-net
+    ports:
+      - 1883:1883
+    depends_on:
+      - mongodb
+      - redis
