@@ -1,4 +1,4 @@
-package com.gro.model.rpicomponent;
+package com.iot.model.rpicomponent;
 
 import java.util.Date;
 
