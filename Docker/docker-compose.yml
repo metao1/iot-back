@@ -10,6 +10,8 @@ services:
     volumes:
       - "./src/main/resources/data.sql"
     restart: always
+    networks:
+      - metao-net
     ports:
       - 3306:3306
     environment:
@@ -18,32 +20,34 @@ services:
       MYSQL_USER: iot
       MYSQL_PASSWORD: iot
 
+
   redis:
+    container_name: redis
     image: "redis:alpine"
     hostname: redis
     ports:
-      - "6379:6379"
+      - 6379:6379
+
   mongodb:
     image: mongo:latest
-    container_name: "mongodb"
+    container_name: springboot-mongo
+    restart: always
     environment:
       - MONGO_DATA_DIR=/data/db
       - MONGO_LOG_DIR=/dev/null
     volumes:
       - ./data/db:/data/db
     ports:
-      - 27017:27017
+      - 27018:27017
 
   mqtt:
-    image: metao/mqtt:latest
+    image: mqtt:latest
     container_name: "mqtt"
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/mqtt
+      - SPRING_DATA_MONGODB_URI=mongodb://springboot-mongo:27017/mqtt
       - MQTT_REDIS_HOST=redis
       - MQTT_REDIS_PORT=6379
       - MQTT_REDIS_DATABASE=redis
-    networks:
-      - metao-net
     ports:
       - 1883:1883
     depends_on:

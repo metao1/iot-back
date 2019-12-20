@@ -11,7 +11,7 @@ spring:
         cache-duration: 1
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/gro?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        url: jdbc:mysql://localhost:3306/iot?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
         username: root
         password: Q}`D9z:<v-BMf;H"K3Pmr/qwG
         hikari:

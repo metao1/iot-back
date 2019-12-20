@@ -24,7 +24,7 @@ public abstract class AbstractRPiComponent implements Serializable {
     protected RPiComponentType type;
 
     @Id
-    @GenericGenerator(name = "RPiComponentId", strategy = "com.gro.model.rpicomponent.RPiComponentIdGenerator")
+    @GenericGenerator(name = "RPiComponentId", strategy = "com.iot.model.rpicomponent.RPiComponentIdGenerator")
     @GeneratedValue(generator = "RPiComponentId")
     private Integer id;
 
