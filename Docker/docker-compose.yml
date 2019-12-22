@@ -1,55 +1,74 @@
 version: "3"
-
 networks:
   metao-net:
     driver: bridge
-
 services:
   mysql:
     image: mysql:latest
-    volumes:
-      - "./src/main/resources/data.sql"
     restart: always
-    networks:
-      - metao-net
     ports:
       - 3306:3306
+    networks:
+      - metao-net
     environment:
       MYSQL_ROOT_PASSWORD: iot
       MYSQL_DATABASE: iot
       MYSQL_USER: iot
       MYSQL_PASSWORD: iot
 
-
-  redis:
-    container_name: redis
-    image: "redis:alpine"
-    hostname: redis
-    ports:
-      - 6379:6379
-
-  mongodb:
-    image: mongo:latest
-    container_name: springboot-mongo
-    restart: always
-    environment:
-      - MONGO_DATA_DIR=/data/db
-      - MONGO_LOG_DIR=/dev/null
+  keyclock-postgres:
+    container_name: keycloak-postgres
+    image: postgres
+    networks:
+      - metao-net
     volumes:
-      - ./data/db:/data/db
-    ports:
-      - 27018:27017
-
-  mqtt:
-    image: mqtt:latest
-    container_name: "mqtt"
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - SPRING_DATA_MONGODB_URI=mongodb://springboot-mongo:27017/mqtt
-      - MQTT_REDIS_HOST=redis
-      - MQTT_REDIS_PORT=6379
-      - MQTT_REDIS_DATABASE=redis
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+
+  keycloak:
+    container_name: keycloak
+    build:
+      context: keycloak/
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: keycloak-postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_IMPORT: /tmp/iot-venture.realm.json
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+      #JDBC_PARAMS: "ssl=true"
     ports:
-      - 1883:1883
+      - 8081:8080
+      - 443:8443
+    networks:
+      - metao-net
     depends_on:
-      - mongodb
-      - redis
+      - keyclock-postgres
+#
+#  mqtt:
+#    image: mqtt:latest
+#    container_name: "mqtt"
+#    networks:
+#      - metao-net
+#    environment:
+#      - SPRING_DATA_MONGODB_URI=mongodb://springboot-mongo:27017/mqtt
+#      - MQTT_REDIS_HOST=redis
+#      - MQTT_REDIS_PORT=6379
+#      - MQTT_REDIS_DATABASE=redis
+#    ports:
+#      - 1883:1883
+#    depends_on:
+#      - mongodb
+#      - redis
+
+volumes:
+  logging:
+  postgres_data:
+    driver: local

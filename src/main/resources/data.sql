@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS iot;
 use iot;
-grant ALL PRIVILEGES ON *.* TO 'iot';
+grant ALL PRIVILEGES ON iot.* TO 'iot'@'localhost';
 flush privileges;
 INSERT INTO `authority` VALUES ('ROLE_ADMIN'),('ROLE_USER');
 INSERT INTO `user` VALUES (1,'admin','2019-08-04 14:44:13.000000','admin','2019-08-04 14:44:18.000000',_binary '','key','admin@gmail.com',NULL,'en','admin','$2a$10$i.lSE/XbO0G.PGeF4Ox16ekThs8gXDpttXhouHF5KnpDOjF0VTR0.',NULL,NULL);
