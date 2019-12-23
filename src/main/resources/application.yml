@@ -1,5 +1,7 @@
 # SPRING PROPERTIES
 spring:
+    main:
+      allow-bean-definition-overriding: true
     devtools:
         restart:
             enabled: true
@@ -125,3 +127,15 @@ micromonitor:
       report-frequency: 60 # in seconds
 
 
+keycloak:
+  realm: iot
+  auth-server-url: http://localhost:8081/auth
+  ssl-required: none
+  resource: iot-back
+  credentials:
+    secret: 6834d946-81ac-4adc-aad5-08e7e518d773
+    #the client secret
+  bearer-only: true #do not redirect to login page
+  cors: true
+  use-resource-role-mappings: true
+  principal-attribute: preferred_username

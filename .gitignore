@@ -44,3 +44,6 @@ Thumbs.db
 .build/*
 /build/
 /.gradle/
+
+#misc
+data
