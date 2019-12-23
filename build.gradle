@@ -40,12 +40,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-actuator:2.1.5.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     runtime 'org.springframework.boot:spring-boot-devtools:2.1.6.RELEASE'
-    implementation('org.springframework.boot:spring-boot-starter-security')
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.springframework.boot:spring-boot-autoconfigure')
     implementation('org.springframework.boot:spring-boot-starter-web')
@@ -60,17 +58,21 @@ dependencies {
     implementation("org.quartz-scheduler:quartz:2.2.3") {
         exclude group: 'slf4j-api', module: 'c3p0'
     }
+    // Keycloak implementation
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.keycloak:keycloak-spring-boot-starter:6.0.0'
+    //keycloak spring boot integration
+    implementation 'org.keycloak:keycloak-admin-client:7.0.1'
 
-    //jwt token provider
-    implementation 'io.jsonwebtoken:jjwt-api:0.10.5'
-    runtime 'io.jsonwebtoken:jjwt-impl:0.10.5'
-    runtime 'io.jsonwebtoken:jjwt-jackson:0.10.5'
+    // Logstash
+    implementation('net.logstash.logback:logstash-logback-encoder:5.3')
 
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     runtimeOnly('mysql:mysql-connector-java:8.0.11')
     compileOnly('org.springframework.boot:spring-boot-configuration-processor')
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('io.projectreactor:reactor-test')
-    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
     testImplementation('org.springframework.security:spring-security-test')
+    testImplementation('org.springframework.restdocs:spring-restdocs-mockmvc')
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 }
