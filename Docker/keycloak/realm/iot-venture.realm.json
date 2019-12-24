@@ -1,8 +1,8 @@
 {
-  "id": "iot",
-  "realm": "iot",
-  "displayName": "IoT",
-  "displayNameHtml": "IoT",
+  "id": "marketplace",
+  "realm": "marketplace",
+  "displayName": "Syncier Marketplace",
+  "displayNameHtml": "Syncier Marketplace",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -46,7 +46,7 @@
         "description": "${role_uma_authorization}",
         "composite": false,
         "clientRole": false,
-        "containerId": "iot",
+        "containerId": "marketplace",
         "attributes": {}
       },
       {
@@ -55,7 +55,7 @@
         "description": "${role_offline-access}",
         "composite": false,
         "clientRole": false,
-        "containerId": "iot",
+        "containerId": "marketplace",
         "attributes": {}
       }
     ],
@@ -83,7 +83,7 @@
           "attributes": {}
         }
       ],
-      "iot-app": [
+      "marketplace-app": [
         {
           "id": "0ba64451-6140-49e0-b720-0f0cc0571556",
           "name": "uma_protection",
@@ -136,7 +136,7 @@
   "clientScopeMappings": {
     "account": [
       {
-        "client": "iot-app",
+        "client": "marketplace-app",
         "roles": [
           "view-profile"
         ]
@@ -150,7 +150,7 @@
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
       "adminUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/iot/account/",
+      "baseUrl": "/realms/marketplace/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
@@ -160,7 +160,7 @@
         "manage-account"
       ],
       "redirectUris": [
-        "/realms/iot/account/*"
+        "/realms/marketplace/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -273,13 +273,13 @@
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
       "adminUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/iot/console/",
+      "baseUrl": "/admin/marketplace/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/admin/iot/console/*"
+        "/admin/marketplace/console/*"
       ],
       "webOrigins": [
         "+"
@@ -331,9 +331,9 @@
     },
     {
       "id": "1432230e-33a6-4def-b7e1-8c5ba784a1b9",
-      "clientId": "iot-app",
-      "name": "iot-app",
-      "description": "iot-app",
+      "clientId": "marketplace-app",
+      "name": "marketplace-app",
+      "description": "marketplace-app",
       "rootUrl": "http://localhost:4200",
       "adminUrl": "http://localhost:4200",
       "surrogateAuthRequired": false,
@@ -490,7 +490,7 @@
       ]
     },    {
       "id": "7fa48435-48b1-4bb1-b9fc-ab8afe8a32a1",
-      "clientId": "iot-gatekeeper",
+      "clientId": "marketplace-gatekeeper",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
@@ -1089,14 +1089,14 @@
   },
   "smtpServer": {
     "password": "**********",
-    "replyToDisplayName": "iot",
+    "replyToDisplayName": "Syncier MarketPlace",
     "starttls": "false",
     "auth": "false",
     "port": "1025",
     "host": "mp-mailhog",
-    "from": "noreply@iot.com",
+    "from": "noReply@syncier.com",
     "ssl": "false",
-    "user": "noreply@iot.com"
+    "user": "noReply@syncier.com"
   },
   "loginTheme": "keycloak",
   "accountTheme": "keycloak",
@@ -1882,9 +1882,9 @@
   "dockerAuthenticationFlow": "docker auth",
   "attributes": {
     "webAuthnPolicyAuthenticatorAttachment": "not specified",
-    "displayName": "iot",
+    "displayName": "Syncier Marketplace",
     "_browser_header.xRobotsTag": "none",
-    "displayNameHtml": "iot",
+    "displayNameHtml": "Syncier Marketplace",
     "webAuthnPolicyRpEntityName": "keycloak",
     "failureFactor": "30",
     "actionTokenGeneratedByUserLifespan": "3600",

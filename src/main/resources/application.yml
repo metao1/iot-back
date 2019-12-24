@@ -36,7 +36,7 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
         hibernate:
-            ddl-auto:  create
+            ddl-auto:  validate
 
 logging:
     level:
@@ -128,10 +128,10 @@ micromonitor:
 
 
 keycloak:
-  realm: iot
+  realm: marketplace
   auth-server-url: http://localhost:8081/auth
   ssl-required: none
-  resource: iot-back
+  resource: bff
   credentials:
     secret: 6834d946-81ac-4adc-aad5-08e7e518d773
     #the client secret

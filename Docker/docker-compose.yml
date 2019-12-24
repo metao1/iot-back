@@ -30,8 +30,7 @@ services:
 
   keycloak:
     container_name: keycloak
-    build:
-      context: keycloak/
+    build: ./keycloak
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: keycloak-postgres

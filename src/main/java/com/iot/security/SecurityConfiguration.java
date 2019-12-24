@@ -52,10 +52,7 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
             "/login", "/register", "/recovery", "/resend", "/status", "/password", "/logout/**",
 
             // ui elements
-            "/js/**", "/img/**", "/css/**", "/syncierfonts/**",
-
-            // user invitation confirmation
-            "/users/invite/confirmed"
+            "/js/**", "/img/**", "/css/**", "/fonts/**"
     };
 
     private static final String[] AUTH_OPERATOR = {
@@ -182,7 +179,6 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 .antMatchers(AUTH_PUBLIC).permitAll()
                 .antMatchers(HttpMethod.GET, AUTH_PUBLIC_GET).permitAll()
                 .antMatchers(HttpMethod.POST, AUTH_PUBLIC_POST).permitAll()
-                .antMatchers(AUTH_OPERATOR).hasRole("operator") // KYCLK: uncomment when webapp supports keycloak
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
