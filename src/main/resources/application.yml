@@ -128,10 +128,10 @@ micromonitor:
 
 
 keycloak:
-  realm: marketplace
+  realm: iot
   auth-server-url: http://localhost:8081/auth
   ssl-required: none
-  resource: marketplace
+  resource: iot-app
   credentials:
     secret: 4039c7fa-e652-4fd3-98d3-10f900921275
     #the client secret
