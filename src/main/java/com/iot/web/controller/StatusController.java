@@ -3,6 +3,7 @@ package com.iot.web.controller;
 import com.iot.security.keycloak.PermissionResolver;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-//@Secured("ROLE_API_CONSUMER")
+@Secured("ROLE_API_CONSUMER")
 @RequestMapping("/api/users")
 @RestController
 @RequiredArgsConstructor

@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "87d8cb46-9bcf-4eb1-a305-d80060740bec",
+		"name": "Kukuli",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ping",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoOUxPUUJ3SUptVTN0TEpYb1FDUnFkckg5elJxd2FPRG5pTFk3cTVCZVZJIn0.eyJqdGkiOiJlMGJkZTBiYi05NDY3LTQ5NGItYWJhNy04NGUwNjk4NjIzM2MiLCJleHAiOjE1NzczMDEwNjIsIm5iZiI6MCwiaWF0IjoxNTc3Mjk3NDYyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvYXV0aC9yZWFsbXMvbWFya2V0cGxhY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNDhhZWJlMDUtYWYxZi00NDdiLThhMWItMmU4ODQyMWViMmEzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWFya2V0cGxhY2UtYXBwIiwibm9uY2UiOiJkOGI5Yzk3Ni1lN2UzLTRmZDYtODY1Ni04YzUxNmU5MjJjNTMiLCJhdXRoX3RpbWUiOjE1NzcyOTc0NjEsInNlc3Npb25fc3RhdGUiOiI5NGIzZGNmYi04NDkwLTQyNzEtYjdiZC1kNmNlOTZlM2NiNjQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJdLCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJNZWhyZGFkIEFsbGFoa2FyYW1pIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWVocmRhZCIsImdpdmVuX25hbWUiOiJNZWhyZGFkIiwiZmFtaWx5X25hbWUiOiJBbGxhaGthcmFtaSIsImVtYWlsIjoibWVocmRhZGFsbGFoa2FyYW1pQGdtYWlsLmNvbSJ9.X4F1qEhONAEKcdcljiRimo4XK5JTG9BSbLkMKpBOPdDHVlHovpIDtVQ4CSTZ4AXB16vMU8f_dGuv06Do-FKg042IJHij6N3RHW-v5YRLj-KkSXc5CZbNrHeea8qB2qzicPAIG1TosrJ5KxGveBGhvWIpWmxy1m9nMDY8mQ59uDutqcXaox_olzf5VNNRZKgJwi2QsJqktEgKtmzWz2bnN1qmlz2lQ_d7hWfz3yuDyoMVafi0-rIZWU5BKNl04zXB8HhA6380lWF6-xPPcHFDO614e1wK6RUcpJ4RACE1S-XAJ9RQzOU8sbKo-nwtCOYYojyeDlaaJpY6eGk99o8fkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ip\":\"127.0.0.1\",\"port\":\"1883\",\"description\":\"ddad\",\"pin\":\"\",\"mqttUsername\":\"test@angular-university.io\",\"mqttPassword\":\"test\",\"type\":\"RPI_3_MODEL_B\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ping",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ping"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "event",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoOUxPUUJ3SUptVTN0TEpYb1FDUnFkckg5elJxd2FPRG5pTFk3cTVCZVZJIn0.eyJqdGkiOiJlMDQ3N2NmOC0yZmZhLTQ1ZGUtYTk3YS05ZDUxZjU5M2Q0NzAiLCJleHAiOjE1NzcyMjk4NDksIm5iZiI6MCwiaWF0IjoxNTc3MjI2MjQ5LCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvYXV0aC9yZWFsbXMvbWFya2V0cGxhY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNDhhZWJlMDUtYWYxZi00NDdiLThhMWItMmU4ODQyMWViMmEzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWFya2V0cGxhY2UtYXBwIiwiYXV0aF90aW1lIjowLCJzZXNzaW9uX3N0YXRlIjoiOThmODU4NDQtOGNkYy00M2I1LTk1ZTgtYTJiMTMwOWQyYzRiIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjQyMDAiXSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJNZWhyZGFkIEFsbGFoa2FyYW1pIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWVocmRhZCIsImdpdmVuX25hbWUiOiJNZWhyZGFkIiwiZmFtaWx5X25hbWUiOiJBbGxhaGthcmFtaSIsImVtYWlsIjoibWVocmRhZGFsbGFoa2FyYW1pQGdtYWlsLmNvbSJ9.L6zzU0f-S18372oJxXdMU48g7VYj02mV7za07-R_KKSBibszQDL0aXJpeUCChDyzZNmqQmXewnubhGCRDVV_1gKSB2C78zpMbZvu41DFVs5ObQG1Jg5dqMEW_LujJD7Kqej1a-qtV8tSoTbE6n0MxMoyWyBM8arOrUOBCj7bJ5FS5V0igU7PNZhPPiZj8EerZJ9sby7YuPDGA59ym1PKXKWcw9C3QU5kzF2l4zRbPXVv5sbjIvTNCZQCetw4Sndc8NRwAI1oYwh2zQJGtX7ObSaZDlv6DxqBBuPoWx6Dto0KnysxbmyjFU6Hs6nyA9jluImDYatPvFuu4HuNGrvUew",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/event-stream",
+						"type": "text"
+					},
+					{
+						"warning": "Key contains invalid characters.",
+						"key": "Cache-Control",
+						"value": "no-cache",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add new node",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoOUxPUUJ3SUptVTN0TEpYb1FDUnFkckg5elJxd2FPRG5pTFk3cTVCZVZJIn0.eyJqdGkiOiJlMGJkZTBiYi05NDY3LTQ5NGItYWJhNy04NGUwNjk4NjIzM2MiLCJleHAiOjE1NzczMDEwNjIsIm5iZiI6MCwiaWF0IjoxNTc3Mjk3NDYyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvYXV0aC9yZWFsbXMvbWFya2V0cGxhY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNDhhZWJlMDUtYWYxZi00NDdiLThhMWItMmU4ODQyMWViMmEzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWFya2V0cGxhY2UtYXBwIiwibm9uY2UiOiJkOGI5Yzk3Ni1lN2UzLTRmZDYtODY1Ni04YzUxNmU5MjJjNTMiLCJhdXRoX3RpbWUiOjE1NzcyOTc0NjEsInNlc3Npb25fc3RhdGUiOiI5NGIzZGNmYi04NDkwLTQyNzEtYjdiZC1kNmNlOTZlM2NiNjQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJdLCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJNZWhyZGFkIEFsbGFoa2FyYW1pIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWVocmRhZCIsImdpdmVuX25hbWUiOiJNZWhyZGFkIiwiZmFtaWx5X25hbWUiOiJBbGxhaGthcmFtaSIsImVtYWlsIjoibWVocmRhZGFsbGFoa2FyYW1pQGdtYWlsLmNvbSJ9.X4F1qEhONAEKcdcljiRimo4XK5JTG9BSbLkMKpBOPdDHVlHovpIDtVQ4CSTZ4AXB16vMU8f_dGuv06Do-FKg042IJHij6N3RHW-v5YRLj-KkSXc5CZbNrHeea8qB2qzicPAIG1TosrJ5KxGveBGhvWIpWmxy1m9nMDY8mQ59uDutqcXaox_olzf5VNNRZKgJwi2QsJqktEgKtmzWz2bnN1qmlz2lQ_d7hWfz3yuDyoMVafi0-rIZWU5BKNl04zXB8HhA6380lWF6-xPPcHFDO614e1wK6RUcpJ4RACE1S-XAJ9RQzOU8sbKo-nwtCOYYojyeDlaaJpY6eGk99o8fkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ip\":\"127.0.0.1\",\"port\":\"1883\",\"description\":\"ddad\",\"pin\":\"\",\"mqttUsername\":\"test@angular-university.io\",\"mqttPassword\":\"test\",\"type\":\"RPI_3_MODEL_B\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/rpi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"rpi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "current user roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoOUxPUUJ3SUptVTN0TEpYb1FDUnFkckg5elJxd2FPRG5pTFk3cTVCZVZJIn0.eyJqdGkiOiJlMGJkZTBiYi05NDY3LTQ5NGItYWJhNy04NGUwNjk4NjIzM2MiLCJleHAiOjE1NzczMDEwNjIsIm5iZiI6MCwiaWF0IjoxNTc3Mjk3NDYyLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwODEvYXV0aC9yZWFsbXMvbWFya2V0cGxhY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiNDhhZWJlMDUtYWYxZi00NDdiLThhMWItMmU4ODQyMWViMmEzIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoibWFya2V0cGxhY2UtYXBwIiwibm9uY2UiOiJkOGI5Yzk3Ni1lN2UzLTRmZDYtODY1Ni04YzUxNmU5MjJjNTMiLCJhdXRoX3RpbWUiOjE1NzcyOTc0NjEsInNlc3Npb25fc3RhdGUiOiI5NGIzZGNmYi04NDkwLTQyNzEtYjdiZC1kNmNlOTZlM2NiNjQiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly9sb2NhbGhvc3Q6NDIwMCJdLCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJNZWhyZGFkIEFsbGFoa2FyYW1pIiwicHJlZmVycmVkX3VzZXJuYW1lIjoibWVocmRhZCIsImdpdmVuX25hbWUiOiJNZWhyZGFkIiwiZmFtaWx5X25hbWUiOiJBbGxhaGthcmFtaSIsImVtYWlsIjoibWVocmRhZGFsbGFoa2FyYW1pQGdtYWlsLmNvbSJ9.X4F1qEhONAEKcdcljiRimo4XK5JTG9BSbLkMKpBOPdDHVlHovpIDtVQ4CSTZ4AXB16vMU8f_dGuv06Do-FKg042IJHij6N3RHW-v5YRLj-KkSXc5CZbNrHeea8qB2qzicPAIG1TosrJ5KxGveBGhvWIpWmxy1m9nMDY8mQ59uDutqcXaox_olzf5VNNRZKgJwi2QsJqktEgKtmzWz2bnN1qmlz2lQ_d7hWfz3yuDyoMVafi0-rIZWU5BKNl04zXB8HhA6380lWF6-xPPcHFDO614e1wK6RUcpJ4RACE1S-XAJ9RQzOU8sbKo-nwtCOYYojyeDlaaJpY6eGk99o8fkQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ip\":\"127.0.0.1\",\"port\":\"1883\",\"description\":\"ddad\",\"pin\":\"\",\"mqttUsername\":\"test@angular-university.io\",\"mqttPassword\":\"test\",\"type\":\"RPI_3_MODEL_B\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/rpi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"rpi"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET TOKEN",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "mehrdad",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "4039c7fa-e652-4fd3-98d3-10f900921275",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "marketplace-app",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "mehrdad",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8081/auth/realms/marketplace/protocol/openid-connect/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auth",
+						"realms",
+						"marketplace",
+						"protocol",
+						"openid-connect",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
