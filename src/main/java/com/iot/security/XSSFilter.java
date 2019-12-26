@@ -12,8 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@Component
-@Order(1)
+//@Component
+//@Order(1)
 public class XSSFilter implements Filter {
 
     @Override

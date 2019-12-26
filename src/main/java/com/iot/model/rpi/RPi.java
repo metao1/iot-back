@@ -37,14 +37,6 @@ public class RPi implements Serializable {
 
     private String imageUrl;
 
-    @OneToMany(mappedBy = "rpi")
-    @JsonIgnoreProperties(value = {"rPi", "rpi"})
-    private List<RPiPin> pins;
-
-    @OneToMany(mappedBy = "rpi")
-    @JsonIgnoreProperties(value = {"rPi", "rpi"})
-    private List<AbstractRPiComponent> components;
-
     public RPi() {
     }
 
@@ -110,22 +102,6 @@ public class RPi implements Serializable {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public List<RPiPin> getPins() {
-        return pins;
-    }
-
-    public void setPins(List<RPiPin> pins) {
-        this.pins = pins;
-    }
-
-    public List<AbstractRPiComponent> getComponents() {
-        return components;
-    }
-
-    public void setComponents(List<AbstractRPiComponent> components) {
-        this.components = components;
     }
 
 }

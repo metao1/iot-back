@@ -8,7 +8,7 @@ import java.io.Serializable;
 @NoRepositoryBean
 public interface RestrictedWriteRepository<T, ID extends Serializable> extends BaseRepository<T, ID> {
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasPermission(#entity, 'create-node')")
     @Override
     <S extends T> S save(S entity);
 

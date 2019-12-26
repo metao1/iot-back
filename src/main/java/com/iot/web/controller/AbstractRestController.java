@@ -6,6 +6,7 @@ import com.iot.utils.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
@@ -22,18 +23,18 @@ public abstract class AbstractRestController<T, DTO, ID extends Serializable> {
         this.repository = repository;
     }
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public Iterable<T> getAll() {
         return this.repository.findAll();
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public T create(@RequestBody DTO obj) {
-        logger.debug("create() with request body {} of type {}", obj, obj.getClass());
+        logger.debug("create() with request body {} of type {}", obj.toString(), obj.getClass());
         return this.repository.save(getWebUtils().convertToObject(obj));
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Optional<T> getById(@PathVariable ID id) {
         Optional<T> t = this.repository.findById(id);
         if (!t.isPresent())
@@ -41,7 +42,7 @@ public abstract class AbstractRestController<T, DTO, ID extends Serializable> {
         return this.repository.findById(id);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public T updateById(@PathVariable ID id, @RequestBody T obj) {
         logger.debug("update() object with id {} with request body {}", id, obj);
         Optional<T> entity = repository.findById(id);
@@ -57,7 +58,7 @@ public abstract class AbstractRestController<T, DTO, ID extends Serializable> {
         return repository.save(entity.get());
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> deleteById(@PathVariable ID id) {
         Optional<T> entity = this.repository.findById(id);
         if (entity.isPresent())

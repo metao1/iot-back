@@ -131,11 +131,24 @@ keycloak:
   realm: marketplace
   auth-server-url: http://localhost:8081/auth
   ssl-required: none
-  resource: bff
+  resource: marketplace
   credentials:
-    secret: 6834d946-81ac-4adc-aad5-08e7e518d773
+    secret: 4039c7fa-e652-4fd3-98d3-10f900921275
     #the client secret
   bearer-only: true #do not redirect to login page
   cors: true
   use-resource-role-mappings: true
   principal-attribute: preferred_username
+  public-client: true
+
+security:
+  authz:
+    role-hierarchy:
+      ROLE_ADMIN:  ROLE_USER_ADMIN
+      ROLE_USER: ROLE_API_CONSUMER
+      ROLE_API_CONSUMER: ROLE_AUTHENTICATED
+      ROLE_AUTHENTICATED: ROLE_UNAUTHENTICATED
+    # maps roles to internal permissions
+    permissions:
+      ROLE_API_CONSUMER: ['read-node']
+      ROLE_USER_ADMIN: ['read-node','create-node','edit-node','delete-node']
