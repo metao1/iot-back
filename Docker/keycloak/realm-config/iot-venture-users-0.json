@@ -1,0 +1,64 @@
+{
+  "realm" : "iot",
+  "users" : [ {
+    "id" : "4c973896-5761-41fc-8217-07c5d13a004b",
+    "createdTimestamp" : 1505479415590,
+    "username" : "mehrdad",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "Mehrdad",
+    "lastName" : "Karami",
+    "email" : "mehrdad@localhost",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "70WNFCtLr4yvxD3qpTtE1l7BjKexGlno4E6niNQo0Vkb7muF7nYoxMMBtujsmjnSQ22iihHUJ3MK7KGv1gF3x26br1heO2V/s0tEa/est7fZQEkRmA0xQBQYO1rvlmY4UNlAz5ggjCbthEO5yo2sq0tOruYlNpiEPJdgwZDVQFkfhgV0ixs7UVBieg1sAD8nHr5Up4Bgs7fJyNddJxJC0up/JKQiNavsMG/5RavBCLpEga+mt1q8iy3J6SVCH0ws69IwSwqHgMAEWRpOvqKg776vq6vlW3ahIRR5gMf1ti+tIyxfFQohrBu4G5Rbsey4Kzn5zwnEi3QNIKUB2dYkbQ==",
+      "salt" : "1/qNkZ5kr77jOMOBPBogGw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1505479429154,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access","user","admin", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "view-profile","user","admin", "manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [  "/Users", "/Admins" ]
+  }, {
+    "id" : "c4af4e2f-b432-4c3b-8405-cca86cd5b97b",
+    "createdTimestamp" : 1505479373742,
+    "username" : "kukuli",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : true,
+    "firstName" : "",
+    "lastName" : "kukuli",
+    "email" : "kukuli@localhost",
+    "credentials" : [ {
+      "type" : "password",
+      "hashedSaltedValue" : "U2W2xVUyo+fkKOhmqFJSKe3/eiVF3/dmIAHiUyncabcF5U5K/tMcScvXhhDe8lUODzLknGRmx/Yw8FZlPE+tbO6CVteyqNQOvzTLxLbrYdstH7qfJxukERR7KCW4dwYGGRcb9+fHTdBASH79Ujx4lUlLcW7hq2r4TMcCMpH4VQmCP6Yf3d6N5axTQD8no5dAkqBxrH8NOyG24RpWcF1ncxFzMThbZqdKkZH3H3FHbwZiiNiWIF241LEUYEjZmFByXixa75PZD1n8+qApysjI0mdC2nwSm4RgmfpdUBGtCLSfMMaVTmfYkOY8R7M1vVt8P0xEHKRWQtqCrNzdUG79vQ==",
+      "salt" : "fmpBI1r8R1u75hDLMUlwBw==",
+      "hashIterations" : 27500,
+      "counter" : 0,
+      "algorithm" : "pbkdf2-sha256",
+      "digits" : 0,
+      "period" : 0,
+      "createdDate" : 1505479392766,
+      "config" : { }
+    } ],
+    "disableableCredentialTypes" : [ "password" ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access","user", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "view-profile","user","manage-account" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ "/Users" ]
+  } ]
+}

@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 public class NotificationSmsService {
 
     @Autowired
-    private TextMessageService textMessageService;
-
-    @Autowired
     private RPiComponentRepository rPiComponentRepository;
 
     @ServiceActivator(inputChannel = "notificationNotifyChannel")

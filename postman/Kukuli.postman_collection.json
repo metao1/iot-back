@@ -209,7 +209,7 @@
 						},
 						{
 							"key": "client_secret",
-							"value": "4039c7fa-e652-4fd3-98d3-10f900921275",
+							"value": "6834d946-81ac-4adc-aad5-08e7e518d773",
 							"type": "text"
 						},
 						{
@@ -219,7 +219,7 @@
 						},
 						{
 							"key": "client_id",
-							"value": "marketplace-app",
+							"value": "iot-back",
 							"type": "text"
 						},
 						{
@@ -230,7 +230,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:8081/auth/realms/marketplace/protocol/openid-connect/token",
+					"raw": "http://localhost:8081/auth/realms/iot/protocol/openid-connect/token",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -239,7 +239,7 @@
 					"path": [
 						"auth",
 						"realms",
-						"marketplace",
+						"iot",
 						"protocol",
 						"openid-connect",
 						"token"

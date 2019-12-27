@@ -36,7 +36,7 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
         hibernate:
-            ddl-auto:  validate
+            ddl-auto: none
 
 logging:
     level:

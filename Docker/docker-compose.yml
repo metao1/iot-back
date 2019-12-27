@@ -10,6 +10,9 @@ services:
       - 3306:3306
     networks:
       - metao-net
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./src/main/docker/resources/data.sql:/docker-entrypoint-initdb.d/0_init.sql
     environment:
       MYSQL_ROOT_PASSWORD: iot
       MYSQL_DATABASE: iot
@@ -29,8 +32,8 @@ services:
       POSTGRES_PASSWORD: password
 
   keycloak:
+    build: .
     container_name: keycloak
-    build: ./keycloak
     environment:
       DB_VENDOR: POSTGRES
       DB_ADDR: keycloak-postgres
@@ -38,7 +41,6 @@ services:
       DB_USER: keycloak
       DB_SCHEMA: public
       DB_PASSWORD: password
-      KEYCLOAK_IMPORT: /tmp/iot-venture.realm.json
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: Pa55w0rd
       # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
@@ -46,6 +48,9 @@ services:
     ports:
       - 8081:8080
       - 443:8443
+    command: ["-b", "0.0.0.0", "-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=dir", "-Dkeycloak.migration.dir=/opt/jboss/keycloak/realm-config", "-Dkeycloak.migration.strategy=OVERWRITE_EXISTING", "-Djboss.socket.binding.port-offset=1000"]
+    volumes:
+        - ./realm-config:/opt/jboss/keycloak/realm-config
     networks:
       - metao-net
     depends_on:
@@ -69,5 +74,7 @@ services:
 
 volumes:
   logging:
+  db-data:
+    driver: local
   postgres_data:
     driver: local
