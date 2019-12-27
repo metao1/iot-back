@@ -16,7 +16,6 @@ import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
-
 @Configuration
 public class MessagingConfig {
 
@@ -33,9 +32,9 @@ public class MessagingConfig {
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setServerURIs(new String[] { "tcp://localhost:1883" });
-        options.setUserName("mehrdad");
-        options.setPassword("mehrdad".toCharArray());
+        options.setServerURIs(new String[] { mqttUrl });
+        options.setUserName(mqttUsername);
+        options.setPassword(mqttPassword.toCharArray());
         factory.setConnectionOptions(options);
         return factory;
     }
