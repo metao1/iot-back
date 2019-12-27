@@ -61,7 +61,7 @@
     ],
     "client": {
       "realm-management": [],
-      "bff": [],
+      "iot-back": [],
       "security-admin-console": [],
       "admin-cli": [],
       "broker": [],
@@ -438,7 +438,7 @@
     },
     {
       "id": "60fc6cbd-10a4-4b90-a350-ff6dbe9fbac4",
-      "clientId": "bff",
+      "clientId": "iot-back",
       "surrogateAuthRequired": false,
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
@@ -1013,7 +1013,7 @@
       },
       "protocolMappers": [
         {
-          "id": "7ac46e40-0bff-4d20-8029-929ef94518e4",
+          "id": "7ac46e40-0iot-back-4d20-8029-929ef94518e4",
           "name": "allowed web origins",
           "protocol": "openid-connect",
           "protocolMapper": "oidc-allowed-origins-mapper",
