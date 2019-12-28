@@ -4,6 +4,8 @@ networks:
     driver: bridge
 services:
   mysql:
+    build:
+      context: mysql
     image: mysql:latest
     restart: always
     ports:
@@ -12,7 +14,7 @@ services:
       - metao-net
     volumes:
       - db-data:/var/lib/mysql
-      - ./src/main/docker/resources/data.sql:/docker-entrypoint-initdb.d/0_init.sql
+      - ./mysql/data.sql:/docker-entrypoint-initdb.d/0_init.sql
     environment:
       MYSQL_ROOT_PASSWORD: iot
       MYSQL_DATABASE: iot

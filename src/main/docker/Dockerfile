@@ -14,6 +14,6 @@ RUN touch /var/log/metao/iot/spring.log
 COPY build/libs/${JAR_FILE} /opt/iot/${JAR_FILE}
 RUN ln -s /opt/metao/${JAR_FILE} /opt/metao/iot.jar
 
-ENV SPRING_PROFILES_ACTIVE=production
+ENV SPRING_PROFILES_ACTIVE=dev
 
 ENTRYPOINT ["java", "-jar", "/opt/metap/iot.jar"]
