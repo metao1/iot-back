@@ -62,7 +62,7 @@ exception:
 mqtt:
   url: tcp://localhost:1883
   username: mehrdad
-  password: nehrdad
+  password: mehrdad
   topics:
     relay:
       change: change
@@ -99,12 +99,12 @@ micromonitor:
 
 
 keycloak:
-  realm: iot
+  realm: master
   auth-server-url: http://localhost:8081/auth
   ssl-required: none
-  resource: iot-back
+  resource: iot-app
   credentials:
-    secret: 6834d946-81ac-4adc-aad5-08e7e518d773
+    secret: 142b4674-e2ff-442e-b57f-fe0f743f48a0
   bearer-only: true #do not redirect to login page
   cors: true
   use-resource-role-mappings: true
