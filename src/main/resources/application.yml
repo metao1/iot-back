@@ -99,12 +99,12 @@ micromonitor:
 
 
 keycloak:
-  realm: master
+  realm: iot
   auth-server-url: http://localhost:8081/auth
   ssl-required: none
   resource: iot-app
   credentials:
-    secret: 142b4674-e2ff-442e-b57f-fe0f743f48a0
+    secret: 33c516fb-3520-4e2a-9b38-7b5241565d47
   bearer-only: true #do not redirect to login page
   cors: true
   use-resource-role-mappings: true
