@@ -18,7 +18,7 @@ until mysqladmin ping &>/dev/null; do
 done
 
 mysql -e "grant ALL PRIVILEGES ON iot.* TO 'iot'@'localhost';"
-mysql -e "SET GLOBAL log_bin_trust_function_creators = 1";
+mysql -e "SET GLOBAL log_bin_trust_function_creators = 1;";
 mysql -e "flush privileges;";
 
 # Tell the MySQL daemon to shutdown.

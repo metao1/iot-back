@@ -6,6 +6,10 @@ CREATE TABLE IF NOT EXISTS sequence_values (
                                                thread_id INT NOT NULL,
                                                created DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+# grant ALL PRIVILEGES ON iot.* TO 'iot'@'localhost';
+# SET GLOBAL log_bin_trust_function_creators = 1;
+# flush privileges;
 DROP FUNCTION IF EXISTS sequence_nextval;
 CREATE FUNCTION sequence_nextval()
     RETURNS INTEGER
@@ -17,5 +21,3 @@ BEGIN
     SELECT id FROM sequence_values ORDER BY created DESC LIMIT 1 INTO nextval;
     RETURN nextval;
 END;
-
-

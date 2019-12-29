@@ -5,8 +5,8 @@ import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.messaging.Message;
 
 @MessagingGateway
-public interface MqttOutboundGateway {
+public interface MqttInboundGateway {
 
-    @Gateway(requestChannel = "mqttOutboundChannel")
-    void send(Message<String> message);
+    @Gateway(requestChannel = "mqttInboundChannel")
+    void receive(Message<String> message);
 }

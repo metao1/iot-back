@@ -60,9 +60,9 @@ exception:
   invalid-relay-state: Invalid Relay state
 
 mqtt:
-  url: tcp://localhost:1883
-  username: mehrdad
-  password: mehrdad
+  url: tcp://test.mosquitto.org:1883
+  username:
+  password:
   topics:
     relay:
       change: change

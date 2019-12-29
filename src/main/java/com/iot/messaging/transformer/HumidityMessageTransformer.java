@@ -14,8 +14,7 @@ public class HumidityMessageTransformer {
     @Autowired
     private Jackson2JsonObjectMapper jackson2JsonObjectMapper;
 
-    @Transformer(inputChannel = "humidityTransformerChannel",
-            outputChannel = "humidityServiceChannel")
+    @Transformer(inputChannel = "humidityTransformerChannel", outputChannel = "humidityServiceChannel")
     public Message<HumidityDTO> transform(Message<String> message) throws Exception {
         String payload = message.getPayload();
         HumidityDTO data = jackson2JsonObjectMapper.fromJson(payload, HumidityDTO.class);

@@ -1,6 +1,8 @@
 package com.iot.messaging;
 
+import io.netty.util.internal.StringUtil;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +15,11 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
+import org.springframework.integration.router.PayloadTypeRouter;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
+import org.springframework.messaging.MessagingException;
 
 @Configuration
 public class MessagingConfig {
@@ -33,32 +38,23 @@ public class MessagingConfig {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
         options.setServerURIs(new String[] { mqttUrl });
-        options.setUserName(mqttUsername);
-        options.setPassword(mqttPassword.toCharArray());
+        if(!StringUtil.isNullOrEmpty(mqttUsername)&& StringUtil.isNullOrEmpty(mqttPassword)) {
+            options.setUserName(mqttUsername);
+            options.setPassword(mqttPassword.toCharArray());
+        }
         factory.setConnectionOptions(options);
         return factory;
     }
 
     @Bean
     public MessageProducer inbound() {
-       /*String[] allTopics = getActionHandlers().parallelStream()
-            .flatMap(actionHandler -> actionHandler.getTopics().stream())
-            .map(topic -> topic.replaceAll("\\{(.*?)\\}", "+"))
-            .toArray(String[]::new);
-
-        int[] allQos = getActionHandlers().parallelStream()
-            .flatMap(actionHandler -> actionHandler.getQos().stream())
-            .mapToInt(Integer::intValue)
-            .toArray();
-
-        MqttPahoMessageDrivenChannelAdapter messageDrivenChannelAdapter = new MqttPahoMessageDrivenChannelAdapter("exhibitManager",
-            getMqttClientFactory(), allTopics);*/
         MqttPahoMessageDrivenChannelAdapter adapter =
             new MqttPahoMessageDrivenChannelAdapter("testingMqtt", mqttClientFactory(),
                 "TEMPERATURE", "HUMIDITY", "NOTIFICATION.Alert", "PROXIMITY.State", "RELAY.State", "MOISTURE.State");
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(2);
+        adapter.setOutputChannelName("mqttInboundChannel");
         adapter.setOutputChannel(mqttRouterChannel());
         return adapter;
     }

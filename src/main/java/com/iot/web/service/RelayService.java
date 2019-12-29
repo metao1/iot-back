@@ -16,7 +16,7 @@ RelayService {
     @Autowired
     private Jackson2JsonObjectMapper jackson2JsonObjectMapper;
 
-   @Autowired
+    @Autowired
     private MqttOutboundGateway gateway;
 
     @Value("${mqtt.topics.relay.change}")
