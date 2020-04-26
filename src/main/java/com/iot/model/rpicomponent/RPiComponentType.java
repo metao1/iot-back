@@ -31,7 +31,6 @@ public enum RPiComponentType {
                 result = MOISTURE;
                 break;
             default:
-                result = null;
         }
 
         return result;

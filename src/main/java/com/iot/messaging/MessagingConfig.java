@@ -37,8 +37,8 @@ public class MessagingConfig {
     public MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
-        options.setServerURIs(new String[] { mqttUrl });
-        if(!StringUtil.isNullOrEmpty(mqttUsername)&& StringUtil.isNullOrEmpty(mqttPassword)) {
+        options.setServerURIs(new String[]{mqttUrl});
+        if (!StringUtil.isNullOrEmpty(mqttUsername) && !StringUtil.isNullOrEmpty(mqttPassword)) {
             options.setUserName(mqttUsername);
             options.setPassword(mqttPassword.toCharArray());
         }
@@ -49,8 +49,8 @@ public class MessagingConfig {
     @Bean
     public MessageProducer inbound() {
         MqttPahoMessageDrivenChannelAdapter adapter =
-            new MqttPahoMessageDrivenChannelAdapter("testingMqtt", mqttClientFactory(),
-                "TEMPERATURE", "HUMIDITY", "NOTIFICATION.Alert", "PROXIMITY.State", "RELAY.State", "MOISTURE.State");
+                new MqttPahoMessageDrivenChannelAdapter("testingMqtt", mqttClientFactory(),
+                        "TEMPERATURE", "HUMIDITY", "NOTIFICATION.Alert", "PROXIMITY.State", "RELAY.State", "MOISTURE.State");
         adapter.setCompletionTimeout(5000);
         adapter.setConverter(new DefaultPahoMessageConverter());
         adapter.setQos(2);

@@ -50,6 +50,7 @@ public class SecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter 
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                .antMatchers("/api/event").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
