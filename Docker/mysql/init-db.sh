@@ -8,9 +8,8 @@
 
 set -e
 set -x
-
 # Start the MySQL daemon in the background.
-/usr/sbin/mysqld &
+/usr/sbin/mysqld --user=iot &
 mysql_pid=$!
 
 until mysqladmin ping &>/dev/null; do
