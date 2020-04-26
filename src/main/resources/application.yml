@@ -49,9 +49,9 @@ exception:
   invalid-relay-state: Invalid Relay state
 
 mqtt:
-  url: tcp://localhost:1883
-  username: mehrdad
-  password: mehrdad
+  url: tcp://broker.hivemq.com:1883
+  #username: mehrdad
+  #password: mehrdad
   topics:
     relay:
       change: change
